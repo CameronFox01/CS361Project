@@ -129,4 +129,8 @@ public class ArrayList <T> extends Collection<T> {
 
         return false;
     }
+    
+    public void trimToSize() {
+        super.trimToSize();
+    }
 }
