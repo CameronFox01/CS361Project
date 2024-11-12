@@ -1,6 +1,7 @@
 package DataStructures;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -47,6 +48,30 @@ public class List<T> implements Iterable<T> {
         addLast(object);
     }
 
+    public T get(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        } else {
+            return arr[index];
+        }
+    }
+
+    public T getFirst() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        } else {
+            return arr[0];
+        }
+    }
+
+    public T getLast() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        } else {
+            return arr[size-1];
+        }
+    }
+
     public boolean contains(T object) {
         for (T item : this) {
             if (item.equals(object)) {
@@ -57,7 +82,7 @@ public class List<T> implements Iterable<T> {
         return false;
     }
 
-    protected T remove(int index) {
+    public T remove(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         } else {
@@ -68,6 +93,14 @@ public class List<T> implements Iterable<T> {
 
             return item;
         }
+    }
+
+    public T removeFirst() {
+        return remove(0);
+    }
+
+    public T removeLast() {
+        return remove(size - 1);
     }
 
     protected int indexOf(T o) {

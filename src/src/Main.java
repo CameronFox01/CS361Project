@@ -40,7 +40,7 @@ public class Main {
      * @return
      */
     private static Vertex[][] to2DArray(List<String> file) {
-        Vertex[][] result = new Vertex[file.size()][file.get(0)];
+        Vertex[][] result = new Vertex[file.size()][file.get(0).length()];
         for (int i = 0; i < file.size(); i++) {
             String line = file.get(i);
 
