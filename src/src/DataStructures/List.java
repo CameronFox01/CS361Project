@@ -143,6 +143,12 @@ public class List<T> implements Iterable<T> {
         size = 0;
     }
 
+    /**
+     * Sets the array reference of this List's array to a new array.
+     * This method is inherently unsafe so should be used with caution.
+     * The length of array "as" should be the same as the amount of elements contained.
+     * @param as New array
+     */
     protected void setArray(T[] as) {
         arr = as;
         size = as.length;
