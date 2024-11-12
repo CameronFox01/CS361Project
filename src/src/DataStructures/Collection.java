@@ -50,7 +50,13 @@ public class Collection <T> implements Iterable<T> {
         arr = newArr;
     }
 
+    protected void clear() {
+        for (int i = 0; i < size; i++) {
+            arr[i] = null;
+        }
 
+        size = 0;
+    }
 
     @SuppressWarnings("unchecked")
     public T[] toArray() {
