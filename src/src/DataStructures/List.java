@@ -99,10 +99,9 @@ public class List<T> implements Iterable<T> {
         arr = toArray();
     }
 
+    @SuppressWarnings("unchecked")
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            arr[i] = null;
-        }
+        arr = (T[]) new Object[10];
 
         size = 0;
     }
