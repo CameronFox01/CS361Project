@@ -13,7 +13,7 @@ public class ArrayList <T> extends Collection<T> {
     }
 
     public ArrayList(ArrayList<T> other) {
-        super(other.arr.length);
+        super(other.size());
         size = other.size();
 
         System.arraycopy(other.arr, 0, arr, 0, other.size());
@@ -52,7 +52,7 @@ public class ArrayList <T> extends Collection<T> {
     }
 
     public void set(int index, T object) {
-        if (index >= size) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         } else {
             arr[index] = object;
@@ -73,7 +73,7 @@ public class ArrayList <T> extends Collection<T> {
     }
 
     public T remove(int index) {
-        if (index >= size) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         } else {
             T item = arr[index];
@@ -129,7 +129,7 @@ public class ArrayList <T> extends Collection<T> {
 
         return false;
     }
-    
+
     public void trimToSize() {
         super.trimToSize();
     }
