@@ -17,7 +17,7 @@ public class Collection <T> implements Iterable<T> {
     @SuppressWarnings("unchecked")
     public Collection(int size) {
         arr = (T[]) new Object[size];
-        size = 0;
+        this.size = size;
     }
 
     public boolean isEmpty() {
