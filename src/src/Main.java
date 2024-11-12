@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-            File file = new File(args[0]);
+            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
