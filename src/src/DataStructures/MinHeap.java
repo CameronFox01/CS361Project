@@ -15,9 +15,29 @@ public class MinHeap<Number> {
         restoreHeapPropertyPostAddition();
     }
 
-    public Number pop() {
+    public Number peek() {
+        if (heap.isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            return heap.getFirst();
+        }
+    }
+
+    public int size() {
+        return heap.size();
+    }
+
+    public boolean isEmpty() {
+        return heap.isEmpty();
+    }
+
+    public Number poll() {
         if (heap.isEmpty()) {
             throw new NoSuchElementException("Heap empty");
+        }
+
+        if (heap.size() == 1) {
+            return heap.remove(0);
         }
 
         // Remove head and replace with last element
