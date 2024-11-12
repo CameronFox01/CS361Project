@@ -12,6 +12,9 @@ public class Graph<T> {
     }
 
     protected void addEdge(Edge<T, T> edge) {
+        addVertex(edge.getFst());
+        addVertex(edge.getSnd());
+
         edges.add(edge);
     }
 
@@ -25,6 +28,21 @@ public class Graph<T> {
 
     public Collection<Edge<T, T>> getEdges() {
         return edges;
+    }
+
+    public Set<T> edgesOfVertex(T v) {
+        Set<T> connectedEdges = new Set<>();
+
+        //Collect all edges
+        for (Edge<T, T> edge : edges) {
+            if (edge.getFst().equals(v)) {
+                connectedEdges.add(edge.getSnd());
+            } else if (edge.getSnd().equals(v)) {
+                connectedEdges.add(edge.getFst());
+            }
+        }
+
+        return connectedEdges;
     }
 
     public boolean containsVertex(T v) {
@@ -45,5 +63,18 @@ public class Graph<T> {
 
     public int edgeCount() {
         return edges.size();
+    }
+
+    // Method to display the graph
+    public void displayGraph() {
+        for (T vertex : vertices) {
+            System.out.print("Vertex " + vertex + " -> ");
+
+            for (T adjacent : edgesOfVertex(vertex)) {
+                System.out.print(adjacent + " ");
+            }
+
+            System.out.println();
+        }
     }
 }
