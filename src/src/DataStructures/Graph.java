@@ -11,6 +11,11 @@ public class Graph<T> {
         edges = new Set<>();
     }
 
+    public Graph(Graph<T> other) {
+        vertices = new Set<>(other.getVertices());
+        edges = new Set<>(other.getEdges());
+    }
+
     protected void addEdge(Edge<T, T> edge) {
         addVertex(edge.getFst());
         addVertex(edge.getSnd());

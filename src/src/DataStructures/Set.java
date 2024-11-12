@@ -5,6 +5,10 @@ public class Set<T> extends List<T> {
         super();
     }
 
+    public Set(List<T> other) {
+        super(other);
+    }
+
     public void add(T o) {
         if (!contains(o)) {
             addLast(o);

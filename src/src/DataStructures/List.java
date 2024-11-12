@@ -20,6 +20,12 @@ public class List<T> implements Iterable<T> {
         this.size = size;
     }
 
+    public List(List<T> other) {
+        this(other.size());
+
+        System.arraycopy(other.arr, 0, arr, 0, other.size());
+    }
+
     public boolean isEmpty() {
         return size == 0;
     }

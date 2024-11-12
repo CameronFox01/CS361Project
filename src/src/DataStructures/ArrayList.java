@@ -12,11 +12,8 @@ public class ArrayList <T> extends List<T> {
         super(size);
     }
 
-    public ArrayList(ArrayList<T> other) {
-        super(other.size());
-        size = other.size();
-
-        System.arraycopy(other.arr, 0, arr, 0, other.size());
+    public ArrayList(List<T> other) {
+        super(other);
     }
 
     public T get(int index) {

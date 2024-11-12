@@ -9,6 +9,10 @@ public class Map<K, V> {
         map = new ArrayList<>();
     }
 
+    public Map(Map<K, V> other) {
+        map = new ArrayList<>(other.entrySet());
+    }
+
     public int size() {
         return map.size();
     }
