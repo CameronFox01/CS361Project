@@ -43,6 +43,10 @@ public class List<T> implements Iterable<T> {
         arr[size++] = object;
     }
 
+    public void add(T object) {
+        addLast(object);
+    }
+
     public boolean contains(T object) {
         for (T item : this) {
             if (item.equals(object)) {

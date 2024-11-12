@@ -1,13 +1,15 @@
+import util.Vertex;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import DataStructures.*;
 import java.util.Scanner;
 
 /**
  * The File is read in as a command line argument.
  */
 public class Main {
-    private static  String[][] fileArray;
+    private static  Vertex[][] fileArray;
+
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
@@ -20,11 +22,12 @@ public class Main {
         } catch (Exception e){
             System.out.println(e);
         }
+
         fileArray = to2DArray(fileString);
 
         // Print the 2D array to verify
-        for (String[] row : fileArray) {
-            for (String element : row) {
+        for (Vertex[] row : fileArray) {
+            for (Vertex element : row) {
                 System.out.print(element);
             }
             System.out.println();
@@ -36,13 +39,13 @@ public class Main {
      * @param file
      * @return
      */
-    private static String[][] to2DArray(List<String> file) {
-        String[][] result = new String[file.size()][];
+    private static Vertex[][] to2DArray(List<String> file) {
+        Vertex[][] result = new Vertex[file.size()][file.get(0)];
         for (int i = 0; i < file.size(); i++) {
             String line = file.get(i);
-            result[i] = new String[line.length()];
+
             for (int j = 0; j < line.length(); j++) {
-                result[i][j] = String.valueOf(line.charAt(j));
+                result[i][j] = new Vertex(line.charAt(j));
             }
         }
         return result;
@@ -52,7 +55,7 @@ public class Main {
      * method to get fileArray in another file.
      * @return
      */
-    public String[][] getFileArray(){
+    public Vertex[][] getFileArray(){
         return fileArray;
     }
 }
