@@ -1,6 +1,6 @@
 package DataStructures;
 
-public class Set<T> extends Collection<T> {
+public class Set<T> extends List<T> {
     public Set() {
         super();
     }

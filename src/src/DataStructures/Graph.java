@@ -22,11 +22,11 @@ public class Graph<T> {
         vertices.add(v);
     }
 
-    public Collection<T> getVertices() {
+    public List<T> getVertices() {
         return vertices;
     }
 
-    public Collection<Edge<T, T>> getEdges() {
+    public List<Edge<T, T>> getEdges() {
         return edges;
     }
 
@@ -64,7 +64,7 @@ public class Graph<T> {
     public int edgeCount() {
         return edges.size();
     }
-    
+
     public void displayGraph() {
         for (T vertex : vertices) {
             System.out.print("Vertex " + vertex + " -> ");

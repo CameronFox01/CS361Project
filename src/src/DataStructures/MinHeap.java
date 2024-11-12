@@ -37,12 +37,12 @@ public class MinHeap<Number> {
         }
 
         if (heap.size() == 1) {
-            return heap.remove(0);
+            return heap.removeFirst();
         }
 
         // Remove head and replace with last element
         Number head = heap.getFirst();
-        heap.set(0, heap.remove(heap.size() - 1));
+        heap.set(0, heap.removeLast());
 
         //Restore heap property
         int currIndex = 0;

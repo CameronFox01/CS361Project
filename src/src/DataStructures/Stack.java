@@ -1,8 +1,9 @@
 package DataStructures;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
-public class Stack<T> extends Collection<T> {
+public class Stack<T> extends LinkedList<T> {
 
     public Stack() {
         super();
@@ -10,22 +11,17 @@ public class Stack<T> extends Collection<T> {
 
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack empty");
+            throw new EmptyStackException();
         } else {
-            return arr[size-1];
+            return getLast();
         }
     }
 
     public T pop() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack empty");
+            throw new EmptyStackException();
         } else {
-            T item = arr[size-1];
-
-            arr[size-1] = null;
-            size--;
-
-            return item;
+            return removeLast();
         }
     }
 

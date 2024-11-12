@@ -2,7 +2,7 @@ package DataStructures;
 
 import java.util.NoSuchElementException;
 
-public class Queue<T> extends Collection<T> {
+public class Queue<T> extends LinkedList<T> {
 
     public Queue() {
         super();
@@ -16,7 +16,7 @@ public class Queue<T> extends Collection<T> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         } else {
-            return arr[0];
+            return getFirst();
         }
     }
 
@@ -24,24 +24,11 @@ public class Queue<T> extends Collection<T> {
         if (isEmpty()) {
             return null;
         } else {
-            return arr[0];
+            return getFirst();
         }
     }
 
     public T poll() {
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            T item = arr[0];
-
-            for (int i = 1; i < size; i++) {
-                arr[i-1] = arr[i];
-            }
-
-            arr[size-1] = null;
-            size--;
-
-            return item;
-        }
+        return removeFirst();
     }
 }

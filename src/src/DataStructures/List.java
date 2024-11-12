@@ -4,18 +4,18 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class Collection <T> implements Iterable<T> {
+public class List<T> implements Iterable<T> {
     protected T[] arr;
     protected int size;
 
     @SuppressWarnings("unchecked")
-    public Collection() {
+    public List() {
         arr = (T[]) new Object[10];
         size = 0;
     }
 
     @SuppressWarnings("unchecked")
-    public Collection(int size) {
+    public List(int size) {
         arr = (T[]) new Object[size];
         this.size = size;
     }

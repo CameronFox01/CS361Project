@@ -2,7 +2,7 @@ package DataStructures;
 
 import java.util.NoSuchElementException;
 
-public class ArrayList <T> extends Collection<T> {
+public class ArrayList <T> extends List<T> {
 
     public ArrayList() {
         super();
@@ -62,6 +62,14 @@ public class ArrayList <T> extends Collection<T> {
 
     public T remove(int index) {
         return super.remove(index);
+    }
+
+    public T removeFirst() {
+        return super.remove(0);
+    }
+
+    public T removeLast() {
+        return super.remove(size() - 1);
     }
 
     public int indexOf(T o) {

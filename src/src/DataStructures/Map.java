@@ -2,8 +2,8 @@ package DataStructures;
 
 import util.Pair;
 
-public class Map<T, V> {
-    private final ArrayList<Pair<T, V>> map;
+public class Map<K, V> {
+    private final ArrayList<Pair<K, V>> map;
 
     public Map() {
         map = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Map<T, V> {
         map.clear();
     }
 
-    public V remove(T key) {
+    public V remove(K key) {
         for (int i = 0; i < size(); i++) {
             if (map.get(i).getFst().equals(key)) {
                 V toReturn = map.get(i).getSnd();
@@ -33,14 +33,58 @@ public class Map<T, V> {
         return null;
     }
 
-    public V put(T key, V value) {
-        map.add(new Pair<>(key, value));
+    public boolean remove(K key, V value) {
+        V val = get(key);
+
+        if (val == null) return false;
+
+        if (val == value) {
+            remove(key);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public V put(K key, V value) {
+        if (containsKey(key)) {
+            for (Pair<K, V> entry : map) {
+                if (entry.getFst().equals(key)) {
+                    entry.setSnd(value);
+                    break;
+                }
+            }
+        } else {
+            map.add(new Pair<>(key, value));
+        }
 
         return value;
     }
 
-    public V get(T key) {
-        for (Pair<T, V> entry : map) {
+    public boolean replace(K key, V value) {
+        if (containsKey(key)) {
+            put(key, value);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean replace(K key, V oldValue, V newValue) {
+        V v = get(key);
+
+        if (v == null) return false;
+
+        if (v == oldValue) {
+            replace(key, newValue);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public V get(K key) {
+        for (Pair<K, V> entry : map) {
             if (entry.getFst() == key) {
                 return entry.getSnd();
             }
@@ -49,8 +93,8 @@ public class Map<T, V> {
         return null;
     }
 
-    public boolean containsKey(T key) {
-        for (Pair<T, V> entry : map) {
+    public boolean containsKey(K key) {
+        for (Pair<K, V> entry : map) {
             if (entry.getFst() == key) {
                 return true;
             }
@@ -60,7 +104,7 @@ public class Map<T, V> {
     }
 
     public boolean containsValue(V value) {
-        for (Pair<T, V> entry : map) {
+        for (Pair<K, V> entry : map) {
             if (entry.getSnd() == value) {
                 return true;
             }
@@ -69,24 +113,24 @@ public class Map<T, V> {
         return false;
     }
 
-    public Collection<Pair<T, V>> entrySet() {
+    public List<Pair<K, V>> entrySet() {
         return new ArrayList<>(map);
     }
 
-    public Collection<T> keys() {
-        ArrayList<T> keys = new ArrayList<>();
+    public List<K> keys() {
+        ArrayList<K> keys = new ArrayList<>();
 
-        for (Pair<T, V> entry : map) {
+        for (Pair<K, V> entry : map) {
             keys.add(entry.getFst());
         }
 
         return keys;
     }
 
-    public Collection<V> values() {
+    public List<V> values() {
         ArrayList<V> values = new ArrayList<>();
 
-        for (Pair<T, V> entry : map) {
+        for (Pair<K, V> entry : map) {
             values.add(entry.getSnd());
         }
 
@@ -95,6 +139,20 @@ public class Map<T, V> {
 
     @Override
     public String toString() {
-        return map.toString();
+        if (size() == 0) {
+            return "{}";
+        } else if (size() == 1) {
+            return "{" + map.get(0).getFst() + "=" + map.get(0).getSnd() + "}";
+        } else {
+            StringBuilder builder = new StringBuilder("{");
+
+            for (int i = 0; i < size() - 1; i++) {
+                builder.append(map.get(i).getFst()).append("=").append(map.get(i).getSnd()).append(", ");
+            }
+
+            builder.append(map.getLast().getFst()).append("=").append(map.getLast().getSnd()).append("}");
+
+            return builder.toString();
+        }
     }
 }
