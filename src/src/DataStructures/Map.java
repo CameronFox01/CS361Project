@@ -13,8 +13,24 @@ public class Map<T, V> {
         return map.size();
     }
 
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
     public void clear() {
         map.clear();
+    }
+
+    public V remove(T key) {
+        for (int i = 0; i < size(); i++) {
+            if (map.get(i).getFst().equals(key)) {
+                V toReturn = map.get(i).getSnd();
+                map.remove(i);
+                return toReturn;
+            }
+        }
+
+        return null;
     }
 
     public V put(T key, V value) {
@@ -75,5 +91,10 @@ public class Map<T, V> {
         }
 
         return values;
+    }
+
+    @Override
+    public String toString() {
+        return map.toString();
     }
 }
