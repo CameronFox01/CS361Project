@@ -141,6 +141,10 @@ public class MinHeap<Number> {
         }
     }
 
+    public List<Number> toList() {
+        return new List<>(heap);
+    }
+
     @Override
     public String toString() {
         return heap.toString();

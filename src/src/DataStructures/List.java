@@ -107,6 +107,11 @@ public class List<T> implements Iterable<T> {
         size = 0;
     }
 
+    protected void setArray(T[] as) {
+        arr = as;
+        size = as.length;
+    }
+
     @SuppressWarnings("unchecked")
     public T[] toArray() {
         if (size == 0) {

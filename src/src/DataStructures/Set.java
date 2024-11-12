@@ -6,7 +6,13 @@ public class Set<T> extends List<T> {
     }
 
     public Set(List<T> other) {
-        super(other);
+        Set<T> newSet = new Set<>();
+
+        for (T o : other) {
+            newSet.add(o);
+        }
+
+        setArray(newSet.toArray());
     }
 
     public void add(T o) {
