@@ -25,8 +25,8 @@ public class Map<T, V> {
 
     public V get(T key) {
         for (Pair<T, V> entry : map) {
-            if (entry.fst == key) {
-                return entry.snd;
+            if (entry.getFst() == key) {
+                return entry.getSnd();
             }
         }
 
@@ -35,7 +35,7 @@ public class Map<T, V> {
 
     public boolean containsKey(T key) {
         for (Pair<T, V> entry : map) {
-            if (entry.fst == key) {
+            if (entry.getFst() == key) {
                 return true;
             }
         }
@@ -45,7 +45,7 @@ public class Map<T, V> {
 
     public boolean containsValue(V value) {
         for (Pair<T, V> entry : map) {
-            if (entry.snd == value) {
+            if (entry.getSnd() == value) {
                 return true;
             }
         }
@@ -61,7 +61,7 @@ public class Map<T, V> {
         ArrayList<T> keys = new ArrayList<>();
 
         for (Pair<T, V> entry : map) {
-            keys.add(entry.fst);
+            keys.add(entry.getFst());
         }
 
         return keys;
@@ -71,7 +71,7 @@ public class Map<T, V> {
         ArrayList<V> values = new ArrayList<>();
 
         for (Pair<T, V> entry : map) {
-            values.add(entry.snd);
+            values.add(entry.getSnd());
         }
 
         return values;

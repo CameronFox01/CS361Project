@@ -39,7 +39,7 @@ public class Collection <T> implements Iterable<T> {
 
     public boolean contains(T object) {
         for (T item : this) {
-            if (item == object) {
+            if (item.equals(object)) {
                 return true;
             }
         }
@@ -67,7 +67,6 @@ public class Collection <T> implements Iterable<T> {
                     return i;
                 }
             }
-
         }
 
         return -1;
