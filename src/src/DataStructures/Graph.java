@@ -30,7 +30,7 @@ public class Graph<T> {
         return edges;
     }
 
-    public Set<T> edgesOfVertex(T v) {
+    public Set<T> verticesAdjacentTo(T v) {
         Set<T> connectedEdges = new Set<>();
 
         //Collect all edges
@@ -64,13 +64,12 @@ public class Graph<T> {
     public int edgeCount() {
         return edges.size();
     }
-
-    // Method to display the graph
+    
     public void displayGraph() {
         for (T vertex : vertices) {
             System.out.print("Vertex " + vertex + " -> ");
 
-            for (T adjacent : edgesOfVertex(vertex)) {
+            for (T adjacent : verticesAdjacentTo(vertex)) {
                 System.out.print(adjacent + " ");
             }
 
