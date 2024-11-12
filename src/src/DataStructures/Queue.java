@@ -39,7 +39,6 @@ public class Queue<T> extends Collection<T> {
             }
 
             arr[size-1] = null;
-
             size--;
 
             return item;

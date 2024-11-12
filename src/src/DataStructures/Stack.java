@@ -22,7 +22,8 @@ public class Stack<T> extends Collection<T> {
         } else {
             T item = arr[size-1];
 
-            arr[size--] = null;
+            arr[size-1] = null;
+            size--;
 
             return item;
         }
