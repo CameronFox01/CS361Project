@@ -35,17 +35,13 @@ public class List<T> implements Iterable<T> {
         return size;
     }
 
-    protected void addLast(T object) {
+    public void add(T object) {
         if (size == arr.length) {
             //Resize
             resize();
         }
 
         arr[size++] = object;
-    }
-
-    public void add(T object) {
-        addLast(object);
     }
 
     public T get(int index) {
