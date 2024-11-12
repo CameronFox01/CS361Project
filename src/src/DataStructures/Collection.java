@@ -14,6 +14,12 @@ public class Collection <T> implements Iterable<T> {
         size = 0;
     }
 
+    @SuppressWarnings("unchecked")
+    public Collection(int size) {
+        arr = (T[]) new Object[size];
+        size = 0;
+    }
+
     public boolean isEmpty() {
         return size == 0;
     }

@@ -8,6 +8,17 @@ public class ArrayList <T> extends Collection<T> {
         super();
     }
 
+    public ArrayList(int size) {
+        super(size);
+    }
+
+    public ArrayList(ArrayList<T> other) {
+        super(other.arr.length);
+        size = other.size();
+
+        System.arraycopy(other.arr, 0, arr, 0, other.size());
+    }
+
     public T get(int index) {
         if (index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
