@@ -37,7 +37,47 @@ public class Collection <T> implements Iterable<T> {
         arr[size++] = object;
     }
 
+    public boolean contains(T object) {
+        for (T item : this) {
+            if (item == object) {
+                return true;
+            }
+        }
 
+        return false;
+    }
+
+    protected T remove(int index) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        } else {
+            T item = arr[index];
+
+            shiftFromIndex(index);
+            size--;
+
+            return item;
+        }
+    }
+
+    protected int indexOf(T o) {
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                if (arr[i] == o) {
+                    return i;
+                }
+            }
+
+        }
+
+        return -1;
+    }
+
+    private void shiftFromIndex(int index) {
+        for (int i = index + 1; i < size; i++) {
+            arr[i - 1] = arr[i];
+        }
+    }
 
     @SuppressWarnings("unchecked")
     protected void resize() {
@@ -54,7 +94,7 @@ public class Collection <T> implements Iterable<T> {
         arr = toArray();
     }
 
-    protected void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             arr[i] = null;
         }

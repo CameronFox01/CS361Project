@@ -1,63 +1,22 @@
 package DataStructures;
 
-import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
-
-public class Set<T> implements Iterable<T> {
-    private final ArrayList<T> set;
-
+public class Set<T> extends Collection<T> {
     public Set() {
-        set = new ArrayList<>();
-    }
-
-    public int size() {
-        return set.size();
-    }
-
-    public boolean isEmpty() {
-        return set.isEmpty();
+        super();
     }
 
     public void add(T o) {
         if (!contains(o)) {
-            set.add(o);
+            addLast(o);
         }
-    }
-
-    public void clear() {
-        set.clear();
-    }
-
-    public boolean contains(T o) {
-        return set.contains(o);
     }
 
     public boolean remove(T o) {
         if (contains(o)) {
-            set.remove(o);
+            super.remove(indexOf(o));
             return true;
         } else {
             return false;
         }
-    }
-
-    public T[] toArray() {
-        return set.toArray();
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return set.iterator();
-    }
-
-    @Override
-    public void forEach(Consumer<? super T> action) {
-        Iterable.super.forEach(action);
-    }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return Iterable.super.spliterator();
     }
 }

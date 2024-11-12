@@ -59,49 +59,13 @@ public class ArrayList <T> extends Collection<T> {
         }
     }
 
-    public int indexOf(T o) {
-        if (size != 0) {
-            for (int i = 0; i < size; i++) {
-                if (get(i) == o) {
-                    return i;
-                }
-            }
-
-        }
-
-        return -1;
-    }
 
     public T remove(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        } else {
-            T item = arr[index];
-
-            shiftFromIndex(index);
-            size--;
-
-            return item;
-        }
+        return super.remove(index);
     }
 
-    public boolean remove(T o) {
-        for(int i = 0; i < size; i++) {
-            if (arr[i] == o) {
-                shiftFromIndex(i);
-                size--;
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void shiftFromIndex(int index) {
-        for (int i = index + 1; i < size; i++) {
-            arr[i - 1] = arr[i];
-        }
+    public int indexOf(T o) {
+        return super.indexOf(o);
     }
 
     public T getFirst() {
@@ -120,16 +84,7 @@ public class ArrayList <T> extends Collection<T> {
         }
     }
 
-    public boolean contains(T object) {
-        for (T item : this) {
-            if (item == object) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    @Override
     public void trimToSize() {
         super.trimToSize();
     }
