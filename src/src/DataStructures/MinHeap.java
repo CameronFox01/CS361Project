@@ -44,31 +44,7 @@ public class MinHeap<Number> {
         Number head = heap.getFirst();
         heap.set(0, heap.removeLast());
 
-        //Restore heap property
-        int currIndex = 0;
-        while (true) {
-            int leftIndex = leftChildFromIndex(currIndex);
-            int rightIndex = rightChildFromIndex(currIndex);
-
-            //If no children, we're done
-            if (leftIndex >= heap.size()) {
-                break;
-            }
-
-            //Determine the smaller child
-            int minIndex = leftIndex;
-            if (rightIndex < heap.size() && greaterThan(heap.get(leftIndex), heap.get(rightIndex))) {
-                minIndex = rightIndex;
-            }
-
-            //Swap if the current node is greater than the smaller child
-            if (greaterThan(heap.get(currIndex), heap.get(minIndex))) {
-                swap(currIndex, minIndex);
-                currIndex = minIndex;
-            } else {
-                break;
-            }
-        }
+        restoreHeapPropertyPostPop();
 
         return head;
     }
@@ -107,6 +83,34 @@ public class MinHeap<Number> {
             heap.set(currNode, temp);
 
             currNode = Math.floorDiv(currNode - 1, 2);
+        }
+    }
+
+    private void restoreHeapPropertyPostPop() {
+        //Restore heap property
+        int currIndex = 0;
+        while (true) {
+            int leftIndex = leftChildFromIndex(currIndex);
+            int rightIndex = rightChildFromIndex(currIndex);
+
+            //If no children, we're done
+            if (leftIndex >= heap.size()) {
+                break;
+            }
+
+            //Determine the smaller child
+            int minIndex = leftIndex;
+            if (rightIndex < heap.size() && greaterThan(heap.get(leftIndex), heap.get(rightIndex))) {
+                minIndex = rightIndex;
+            }
+
+            //Swap if the current node is greater than the smaller child
+            if (greaterThan(heap.get(currIndex), heap.get(minIndex))) {
+                swap(currIndex, minIndex);
+                currIndex = minIndex;
+            } else {
+                break;
+            }
         }
     }
 
