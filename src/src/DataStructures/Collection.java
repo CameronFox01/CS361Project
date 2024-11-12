@@ -22,6 +22,17 @@ public class Collection <T> implements Iterable<T> {
         return size;
     }
 
+    protected void addLast(T object) {
+        if (size == arr.length) {
+            //Resize
+            resize();
+        }
+
+        arr[size++] = object;
+    }
+
+
+
     @SuppressWarnings("unchecked")
     protected void resize() {
         //Double capacity of array

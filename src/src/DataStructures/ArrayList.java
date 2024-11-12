@@ -16,13 +16,8 @@ public class ArrayList <T> extends Collection<T> {
         }
     }
 
-    public void add(T object) {
-        if (size == arr.length) {
-            //Resize
-            resize();
-        }
-
-        arr[size++] = object;
+    public void add(T o) {
+        addLast(o);
     }
 
     public void add(T o, int index) {
