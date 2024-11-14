@@ -18,7 +18,7 @@ public class List<T> implements Iterable<T> {
     @SuppressWarnings("unchecked")
     public List(int size) {
         arr = (T[]) new Object[size];
-        this.size = size;
+        this.size = 0;
     }
 
     public List(List<T> other) {
