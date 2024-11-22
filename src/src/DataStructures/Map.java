@@ -148,13 +148,13 @@ public class Map<K, V> {
         } else if (size() == 1) {
             return "{" + map.get(0).getFst() + "=" + map.get(0).getSnd() + "}";
         } else {
-            StringBuilder builder = new StringBuilder("{");
+            StringBuilder builder = new StringBuilder("{\n");
 
             for (int i = 0; i < size() - 1; i++) {
-                builder.append(map.get(i).getFst()).append("=").append(map.get(i).getSnd()).append(", ");
+                builder.append(map.get(i).getFst()).append("=").append(map.get(i).getSnd()).append(", \n");
             }
 
-            builder.append(map.getLast().getFst()).append("=").append(map.getLast().getSnd()).append("}");
+            builder.append(map.getLast().getFst()).append("=").append(map.getLast().getSnd()).append("\n}");
 
             return builder.toString();
         }

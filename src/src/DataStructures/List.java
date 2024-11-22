@@ -91,6 +91,15 @@ public class List<T> implements Iterable<T> {
         }
     }
 
+    public boolean remove(T o) {
+        if (contains(o)) {
+            remove(indexOf(o));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public T removeFirst() {
         return remove(0);
     }

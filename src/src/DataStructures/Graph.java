@@ -1,30 +1,35 @@
 package DataStructures;
 
 import util.Edge;
+import util.Vertex;
 
 public class Graph<T> {
     private final Set<T> vertices;
     private final Set<Edge<T, T>> edges;
+    private final Map<T, Set<T>> adjancecyMap;
 
     public Graph() {
+        adjancecyMap = new Map<>();
         vertices = new Set<>();
         edges = new Set<>();
-    }
-
-    public Graph(Graph<T> other) {
-        vertices = new Set<>(other.getVertices());
-        edges = new Set<>(other.getEdges());
     }
 
     protected void addEdge(Edge<T, T> edge) {
         addVertex(edge.getFst());
         addVertex(edge.getSnd());
 
+        adjancecyMap.get(edge.getFst()).add(edge.getSnd());
+        adjancecyMap.get(edge.getSnd()).add(edge.getFst());
+
         edges.add(edge);
     }
 
     public void addVertex(T v) {
         vertices.add(v);
+
+        if (!adjancecyMap.containsKey(v)) {
+            adjancecyMap.put(v, new Set<>());
+        }
     }
 
     public List<T> getVertices() {
@@ -36,18 +41,13 @@ public class Graph<T> {
     }
 
     public Set<T> verticesAdjacentTo(T v) {
-        Set<T> connectedEdges = new Set<>();
+        if (!containsVertex(v)) return null;
 
-        //Collect all edges
-        for (Edge<T, T> edge : edges) {
-            if (edge.getFst().equals(v)) {
-                connectedEdges.add(edge.getSnd());
-            } else if (edge.getSnd().equals(v)) {
-                connectedEdges.add(edge.getFst());
-            }
-        }
+        return adjancecyMap.get(v);
+    }
 
-        return connectedEdges;
+    public Map<T, Set<T>> getAdjancecyMap() {
+        return adjancecyMap;
     }
 
     public boolean containsVertex(T v) {
