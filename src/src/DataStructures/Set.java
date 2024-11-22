@@ -17,7 +17,7 @@ public class Set<T> extends List<T> {
 
     public void add(T o) {
         if (!contains(o)) {
-            add(o);
+            super.add(o);
         }
     }
 
