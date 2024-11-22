@@ -73,7 +73,7 @@ public class Graph<T> {
 
     public void displayGraph() {
         for (T vertex : vertices) {
-            System.out.print("Vertex " + vertex + " -> ");
+            System.out.println("Vertex " + vertex + " -> ");
 
             for (Edge<T, T> edgeOf : verticesAdjacentTo(vertex)) {
                 if (edgeOf.getFst().equals(vertex)) {
