@@ -13,6 +13,8 @@ import java.util.Scanner;
 public class Main {
     private static  Vertex[][] fileArray;
 
+    public static WeightedGraph<Vertex> graph;
+
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
@@ -28,7 +30,7 @@ public class Main {
 
         fileArray = to2DArray(fileString);
 
-        WeightedGraph<Vertex> graph = arrayToGraph(fileArray);
+        graph = arrayToGraph(fileArray);
 
         // Print the 2D array to verify
         for (Vertex[] row : fileArray) {
