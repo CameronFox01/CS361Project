@@ -2,11 +2,12 @@ package DataStructures;
 
 import util.Edge;
 import util.Vertex;
+import util.WeightedEdge;
 
 public class Graph<T> {
     private final Set<T> vertices;
     private final Set<Edge<T, T>> edges;
-    private final Map<T, Set<T>> adjancecyMap;
+    private final Map<T, Set<Edge<T, T>>> adjancecyMap;
 
     public Graph() {
         adjancecyMap = new Map<>();
@@ -18,8 +19,8 @@ public class Graph<T> {
         addVertex(edge.getFst());
         addVertex(edge.getSnd());
 
-        adjancecyMap.get(edge.getFst()).add(edge.getSnd());
-        adjancecyMap.get(edge.getSnd()).add(edge.getFst());
+        adjancecyMap.get(edge.getFst()).add(edge);
+        adjancecyMap.get(edge.getSnd()).add(edge);
 
         edges.add(edge);
     }
@@ -40,13 +41,13 @@ public class Graph<T> {
         return edges;
     }
 
-    public Set<T> verticesAdjacentTo(T v) {
+    public Set<Edge<T, T>> verticesAdjacentTo(T v) {
         if (!containsVertex(v)) return null;
 
         return adjancecyMap.get(v);
     }
 
-    public Map<T, Set<T>> getAdjancecyMap() {
+    public Map<T, Set<Edge<T, T>>> getAdjancecyMap() {
         return adjancecyMap;
     }
 
@@ -74,8 +75,12 @@ public class Graph<T> {
         for (T vertex : vertices) {
             System.out.print("Vertex " + vertex + " -> ");
 
-            for (T adjacent : verticesAdjacentTo(vertex)) {
-                System.out.print(adjacent + " ");
+            for (Edge<T, T> edgeOf : verticesAdjacentTo(vertex)) {
+                if (edgeOf.getFst().equals(vertex)) {
+                    System.out.println(edgeOf.getSnd() + " ");
+                } else {
+                    System.out.println(edgeOf.getFst() + " ");
+                }
             }
 
             System.out.println();
