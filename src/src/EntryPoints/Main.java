@@ -1,3 +1,5 @@
+package EntryPoints;
+
 import util.Edge;
 import util.Vertex;
 
