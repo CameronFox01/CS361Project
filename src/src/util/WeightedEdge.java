@@ -19,4 +19,9 @@ public class WeightedEdge<T, V> extends Edge<T, V> {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "(" + getFst() + "<->" + getSnd() + ", w: " + getWeight() + ")";
+    }
 }
