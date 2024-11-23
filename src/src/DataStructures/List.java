@@ -17,14 +17,16 @@ public class List<T> implements Iterable<T> {
 
     @SuppressWarnings("unchecked")
     public List(int size) {
-        arr = (T[]) new Object[size];
+        arr = (T[]) new Object[size+1];
         this.size = 0;
     }
 
+    @SuppressWarnings("unchecked")
     public List(List<T> other) {
         this(other.size());
 
         System.arraycopy(other.arr, 0, arr, 0, other.size());
+        this.size = other.size();
     }
 
     public boolean isEmpty() {
