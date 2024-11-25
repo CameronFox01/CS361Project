@@ -1,5 +1,6 @@
 package EntryPoints;
 
+import Algorithms.Dijkstra;
 import util.Edge;
 import util.Vertex;
 
@@ -20,12 +21,12 @@ public class Main {
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+           // File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+            File file = new File(args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
             }
-
         } catch (Exception e){
             System.out.println(e);
         }
@@ -51,6 +52,9 @@ public class Main {
         for (Edge<Vertex, Vertex> edge : verGraph.getEdges()) {
             graph.addEdge((WeightedEdge<Vertex, Vertex>) edge);
         }
+        //This is to start the Dijkstra algorithm
+        int[] startingVertex = {0, 0};
+        Dijkstra.start(graph,startingVertex);
     }
 
     private static WeightedGraph<Vertex> arrayToGraph(Vertex[][] arr) {
