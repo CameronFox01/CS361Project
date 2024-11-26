@@ -7,10 +7,8 @@ import util.WeightedEdge;
 public class Graph<T> {
     private final Set<T> vertices;
     private final Set<Edge<T, T>> edges;
-    private final Map<T, Set<Edge<T, T>>> adjancecyMap;
 
     public Graph() {
-        adjancecyMap = new Map<>();
         vertices = new Set<>();
         edges = new Set<>();
     }
@@ -19,18 +17,11 @@ public class Graph<T> {
         addVertex(edge.getFst());
         addVertex(edge.getSnd());
 
-        adjancecyMap.get(edge.getFst()).add(edge);
-        adjancecyMap.get(edge.getSnd()).add(edge);
-
         edges.add(edge);
     }
 
     public void addVertex(T v) {
         vertices.add(v);
-
-        if (!adjancecyMap.containsKey(v)) {
-            adjancecyMap.put(v, new Set<>());
-        }
     }
 
     public List<T> getVertices() {
@@ -39,16 +30,6 @@ public class Graph<T> {
 
     public List<Edge<T, T>> getEdges() {
         return edges;
-    }
-
-    public Set<Edge<T, T>> verticesAdjacentTo(T v) {
-        if (!containsVertex(v)) return null;
-
-        return adjancecyMap.get(v);
-    }
-
-    public Map<T, Set<Edge<T, T>>> getAdjancecyMap() {
-        return adjancecyMap;
     }
 
     public boolean containsVertex(T v) {
@@ -69,21 +50,5 @@ public class Graph<T> {
 
     public int edgeCount() {
         return edges.size();
-    }
-
-    public void displayGraph() {
-        for (T vertex : vertices) {
-            System.out.println("Vertex " + vertex + " -> ");
-
-            for (Edge<T, T> edgeOf : verticesAdjacentTo(vertex)) {
-                if (edgeOf.getFst().equals(vertex)) {
-                    System.out.println(edgeOf.getSnd() + " ");
-                } else {
-                    System.out.println(edgeOf.getFst() + " ");
-                }
-            }
-
-            System.out.println();
-        }
     }
 }

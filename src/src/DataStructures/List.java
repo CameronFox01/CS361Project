@@ -23,7 +23,7 @@ public class List<T> implements Iterable<T> {
 
     @SuppressWarnings("unchecked")
     public List(List<T> other) {
-        this(other.size());
+        arr = (T[]) new Object[other.size+1];
 
         System.arraycopy(other.arr, 0, arr, 0, other.size());
         this.size = other.size();
