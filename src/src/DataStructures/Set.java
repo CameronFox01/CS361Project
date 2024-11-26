@@ -15,9 +15,19 @@ public class Set<T> extends List<T> {
         setArray(newSet.toArray());
     }
 
+    @Override
     public void add(T o) {
         if (!contains(o)) {
             super.add(o);
+        }
+    }
+
+    public boolean tryAdd(T o) {
+        if (!contains(o)) {
+            super.add(o);
+            return true;
+        } else {
+            return false;
         }
     }
 

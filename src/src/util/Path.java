@@ -46,6 +46,10 @@ public class Path {
         return path;
     }
 
+    public void removeLast() {
+        path.removeLast();
+    }
+
     public void displayPath(Vertex[][] fileArray) {
         Character[][] pathArr = new Character[fileArray.length][fileArray[0].length];
 

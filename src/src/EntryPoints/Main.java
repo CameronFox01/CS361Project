@@ -1,12 +1,10 @@
 package EntryPoints;
 
-import Algorithms.Dijkstra;
-import util.Edge;
-import util.Vertex;
+import Algorithms.DFS;
+import util.*;
 
 import java.io.File;
 import DataStructures.*;
-import util.WeightedEdge;
 
 import java.util.Scanner;
 
@@ -14,15 +12,16 @@ import java.util.Scanner;
  * The File is read in as a command line argument.
  */
 public class Main {
-    private static  Vertex[][] fileArray;
+    public static Vertex[][] fileArray;
 
-    public static WeightedGraph<Vertex> graph;
+    public static WeightedGraph<Vertex> weightedGraph;
+    private static int numTargets = 0;
 
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-           // File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
-            File file = new File(args[0]);
+            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+            //File file = new File(args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
@@ -33,31 +32,52 @@ public class Main {
 
         fileArray = to2DArray(fileString);
 
-        graph = arrayToGraph(fileArray);
+        weightedGraph = arrayToWeightedGraph(fileArray);
 
-        // Print the 2D array to verify
-        for (Vertex[] row : fileArray) {
-            for (Vertex element : row) {
-                System.out.print(element.c);
-            }
-            System.out.println();
-        }
 
         //Transpose
         Vertex[][] transposedArr = transpose2DArray(fileArray);
 
-        WeightedGraph<Vertex> verGraph = arrayToGraph(transposedArr);
+        WeightedGraph<Vertex> verGraph = arrayToWeightedGraph(transposedArr);
 
         //Add vertical edges to graph
-        for (Edge<Vertex, Vertex> edge : verGraph.getEdges()) {
-            graph.addEdge((WeightedEdge<Vertex, Vertex>) edge);
+        for (WeightedEdge<Vertex, Vertex> edge : verGraph.getEdges()) {
+            weightedGraph.addEdge(edge);
         }
+
         //This is to start the Dijkstra algorithm
-        int[] startingVertex = {0, 0};
-        Dijkstra.start(graph,startingVertex);
+        //int[] startingVertex = {0, 0};
+        //Dijkstra.start(graph,startingVertex);
+
+        for (Vertex[] vertices : fileArray) {
+            for (int j = 0; j < fileArray[0].length; j++) {
+                if (vertices[j].c == '1') {
+                    numTargets++;
+                }
+            }
+        }
+
+        Path path = DFS.findPath(fileArray[0][0], numTargets);
+
+        if (path == null) {
+            System.out.println("No path found with DFS");
+        } else {
+            path.displayPath(fileArray);
+        }
+
+
+        testFunction(5, 10, () -> DFS.findPath(fileArray[0][0], numTargets));
     }
 
-    private static WeightedGraph<Vertex> arrayToGraph(Vertex[][] arr) {
+    private static void testFunction(int numTrials, int numSamples, Runnable func) {
+        for (int i = 0; i < numTrials; i++) {
+            ArrayList<Long> runtimes = measureFunctionTime(numSamples, func);
+
+            System.out.println("Mean Time: " + (meanOfRuntimes(runtimes) / 1_000_000) + "ms");
+        }
+    }
+
+    private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {
         WeightedGraph<Vertex> graph = new WeightedGraph<>();
 
         // Process each row to connect horizontal segments
@@ -101,14 +121,7 @@ public class Main {
             return; // No edges to add if less than 2 cells
         }
 
-        WeightedEdge<Vertex, Vertex> newEdge = new WeightedEdge<>();
-        //Set vertices
-        newEdge.setFst(cells.getFirst());
-        newEdge.setSnd(cells.getLast());
-        //Set weight
-        newEdge.setWeight(cells.size() - 1);
-
-        graph.addEdge(newEdge);
+        graph.addEdge(cells.getFirst(), cells.getLast(), cells.size() - 1);
     }
 
     public static Vertex[][] transpose2DArray(Vertex[][] matrix) {
@@ -148,5 +161,33 @@ public class Main {
      */
     public Vertex[][] getFileArray(){
         return fileArray;
+    }
+
+    private static ArrayList<Long> measureFunctionTime(int numSamples, Runnable func) {
+        ArrayList<Long> runtimes = new ArrayList<>();
+
+        for (int i = 0; i < numSamples; i++) {
+            long startTime = System.nanoTime();
+            func.run();
+            long endTime = System.nanoTime();
+
+            runtimes.add((endTime - startTime));
+        }
+
+        return runtimes;
+    }
+
+    private static long meanOfRuntimes(ArrayList<Long> runtimes) {
+        long total = 0;
+
+        for (Long runtime : runtimes) {
+            total += runtime;
+        }
+
+        return total / runtimes.size();
+    }
+
+    private static long nanoToMs(long nano) {
+        return nano / 1_000_000;
     }
 }
