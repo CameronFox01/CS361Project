@@ -48,7 +48,7 @@ public class DFS {
 
             //Adjust weight
             path.setWeight(oldWeight + edge.getWeight());
-            Path responsePath = dfs(currDepth + 1, numTargets, otherVertex, visited, path);
+            Path responsePath = dfs(currDepth + edge.getWeight(), numTargets, otherVertex, visited, path);
 
             //Don't consider path if it's null or not a found path
             if (responsePath == null || !responsePath.isFullPath()) continue;
