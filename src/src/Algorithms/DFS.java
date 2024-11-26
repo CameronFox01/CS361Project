@@ -1,5 +1,6 @@
 package Algorithms;
 
+import DataStructures.Map;
 import DataStructures.Set;
 import EntryPoints.Main;
 import util.*;
@@ -7,20 +8,21 @@ import util.*;
 public class DFS {
     private static int estimatedMaxPathWeight;
     private static Path minPath;
+    private static int visitedNodes;
 
-    public static Path findPath(Vertex startVertex, int numTargets) {
+    public static Pair<Integer, Path> findPath(Vertex startVertex, int numTargets) {
         estimatedMaxPathWeight = Integer.MAX_VALUE;
         minPath = null;
+        visitedNodes = 0;
 
         dfs(1, numTargets, startVertex, new Set<>(), new Path(1));
 
-        Path pathFound = minPath;
-        minPath = null;
-
-        return pathFound;
+        return new Pair<>(visitedNodes, minPath);
     }
 
     private static void dfs(int currDepth, int numTargets, Vertex curr, Set<Vertex> visited, Path path) {
+        visitedNodes++;
+
         if (currDepth > estimatedMaxPathWeight) return;
 
         if (!visited.tryAdd(curr)) return;
@@ -35,7 +37,7 @@ public class DFS {
                 tryUpdateMinPath(path);
 
                 //Backtrack
-                visited.remove(curr);
+                visited.removeLast();
                 path.removeLast();
                 return;
             }
@@ -55,7 +57,7 @@ public class DFS {
         }
 
         //Backtrack
-        visited.remove(curr);
+        visited.removeLast();
         path.removeLast();
     }
 

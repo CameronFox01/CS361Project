@@ -59,12 +59,13 @@ public class Main {
         int[] startingVertex = {0, 0};
         Dijkstra.start(weightedGraph ,startingVertex);
 
-        Path dfsPath = DFS.findPath(fileArray[0][0], numTargets);
+        Pair<Integer, Path> dfsPath = DFS.findPath(fileArray[0][0], numTargets);
 
-        if (dfsPath == null) {
+        System.out.println("Visited " + dfsPath.getFst() + " nodes.");
+        if (dfsPath.getSnd() == null) {
             System.out.println("No path found with DFS");
         } else {
-            dfsPath.displayPath(fileArray);
+            dfsPath.getSnd().displayPath(fileArray);
 
             testFunction(3, 5, () -> DFS.findPath(fileArray[0][0], numTargets));
         }
