@@ -1,20 +1,19 @@
 package Algorithms;
 
-import DataStructures.PathMinHeap;
 import DataStructures.Set;
 import EntryPoints.Main;
 import util.*;
 
 public class DFS {
-    private static int estimatedMaxPathDepth;
+    private static int estimatedMaxPathWeight;
 
     public static Path findPath(Vertex startVertex, int numTargets) {
-        estimatedMaxPathDepth = Integer.MAX_VALUE;
+        estimatedMaxPathWeight = Integer.MAX_VALUE;
         return dfs(0, numTargets, startVertex, new Set<>(), new Path());
     }
 
     private static Path dfs(int currDepth, int numTargets, Vertex curr, Set<Vertex> visited, Path path) {
-        if (currDepth > estimatedMaxPathDepth) return null;
+        if (currDepth > estimatedMaxPathWeight) return null;
 
         if (!visited.tryAdd(curr)) return null;
 
@@ -54,28 +53,24 @@ public class DFS {
             //Don't consider path if it's null or not a found path
             if (responsePath == null || !responsePath.isFullPath()) continue;
 
-            if (minPath == null) {
-                //Initialize minPath
+            //Track the minimum path found
+            if (minPath == null || minPath.getWeight() > responsePath.getWeight()) {
                 minPath = responsePath;
                 updateEstimate(minPath.getWeight());
-            } else {
-                //Update with min path
-                if (minPath.getWeight() > responsePath.getWeight()) {
-                    minPath = responsePath;
-                    updateEstimate(minPath.getWeight());
-                }
             }
         }
 
         //Backtrack
         visited.remove(curr);
         path.removeLast();
+
+        //Return min found path
         return minPath;
     }
 
     private static void updateEstimate(int newDepth) {
-        if (newDepth < estimatedMaxPathDepth) {
-            estimatedMaxPathDepth = newDepth;
+        if (newDepth < estimatedMaxPathWeight) {
+            estimatedMaxPathWeight = newDepth;
         }
     }
 }
