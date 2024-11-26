@@ -9,7 +9,7 @@ public class DFS {
 
     public static Path findPath(Vertex startVertex, int numTargets) {
         estimatedMaxPathWeight = Integer.MAX_VALUE;
-        return dfs(0, numTargets, startVertex, new Set<>(), new Path());
+        return dfs(1, numTargets, startVertex, new Set<>(), new Path(1));
     }
 
     private static Path dfs(int currDepth, int numTargets, Vertex curr, Set<Vertex> visited, Path path) {

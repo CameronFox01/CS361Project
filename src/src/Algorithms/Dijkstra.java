@@ -33,6 +33,6 @@ public class Dijkstra {
 //            System.out.println(edge);
 //        }
 
-        graph.displayGraph();
+        //graph.displayGraph();
     }
 }

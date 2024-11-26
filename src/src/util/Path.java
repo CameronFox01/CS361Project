@@ -17,6 +17,11 @@ public class Path {
         path = new ArrayList<>(other.path);
     }
 
+    public Path(int weight) {
+        this.weight = weight;
+        this.path = new ArrayList<>();
+    }
+
     public Path(int weight, ArrayList<Vertex> path) {
         this.weight = weight;
         this.path = new ArrayList<>(path);
@@ -55,12 +60,48 @@ public class Path {
 
         for (int i = 0; i < pathArr.length; i++) {
             for (int j = 0; j < pathArr[0].length; j++) {
-                pathArr[i][j] = '0';
+                pathArr[i][j] = (fileArray[i][j].c == '1') ? '1' : '_';
             }
         }
 
-        for (Vertex vertex : getPath()) {
-            pathArr[vertex.y][vertex.x] = '1';
+        for (int i = 0; i < path.size() - 1; i++) {
+            Vertex start = path.get(i);
+            Vertex end = path.get(i + 1);
+
+            // If horizontal movement (same y-coordinate)
+            if (start.y == end.y) {
+                // Ensure we're moving in the correct direction
+                if (start.x < end.x) {
+                    for (int j = start.x; j <= end.x; j++) {
+                        if (pathArr[start.y][j] != '1') {
+                            pathArr[start.y][j] = 'x';
+                        }
+                    }
+                } else {
+                    for (int j = start.x; j >= end.x; j--) {
+                        if (pathArr[start.y][j] != '1') {
+                            pathArr[start.y][j] = 'x';
+                        }
+                    }
+                }
+            }
+            // If vertical movement (same x-coordinate)
+            else if (start.x == end.x) {
+                // Ensure we're moving in the correct direction
+                if (start.y < end.y) {
+                    for (int j = start.y; j <= end.y; j++) {
+                        if (pathArr[j][start.x] != '1') {
+                            pathArr[j][start.x] = 'x';
+                        }
+                    }
+                } else {
+                    for (int j = start.y; j >= end.y; j--) {
+                        if (pathArr[j][start.x] != '1') {
+                            pathArr[j][start.x] = 'x';
+                        }
+                    }
+                }
+            }
         }
 
         System.out.println("Path distance: " + weight);

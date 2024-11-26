@@ -1,6 +1,7 @@
 package EntryPoints;
 
 import Algorithms.DFS;
+import Algorithms.Dijkstra;
 import util.*;
 
 import java.io.File;
@@ -34,10 +35,10 @@ public class Main {
 
         weightedGraph = arrayToWeightedGraph(fileArray);
 
-
         //Transpose
         Vertex[][] transposedArr = transpose2DArray(fileArray);
 
+        //Compute vertical edges
         WeightedGraph<Vertex> verGraph = arrayToWeightedGraph(transposedArr);
 
         //Add vertical edges to graph
@@ -45,10 +46,7 @@ public class Main {
             weightedGraph.addEdge(edge);
         }
 
-        //This is to start the Dijkstra algorithm
-        //int[] startingVertex = {0, 0};
-        //Dijkstra.start(graph,startingVertex);
-
+        //Find number of targets in graph
         for (Vertex[] vertices : fileArray) {
             for (int j = 0; j < fileArray[0].length; j++) {
                 if (vertices[j].c == '1') {
@@ -57,16 +55,19 @@ public class Main {
             }
         }
 
-        Path path = DFS.findPath(fileArray[0][0], numTargets);
+        //This is to start the Dijkstra algorithm
+        int[] startingVertex = {0, 0};
+        Dijkstra.start(weightedGraph ,startingVertex);
 
-        if (path == null) {
+        Path dfsPath = DFS.findPath(fileArray[0][0], numTargets);
+
+        if (dfsPath == null) {
             System.out.println("No path found with DFS");
         } else {
-            path.displayPath(fileArray);
+            dfsPath.displayPath(fileArray);
+
+            testFunction(3, 5, () -> DFS.findPath(fileArray[0][0], numTargets));
         }
-
-
-        testFunction(5, 10, () -> DFS.findPath(fileArray[0][0], numTargets));
     }
 
     private static void testFunction(int numTrials, int numSamples, Runnable func) {
@@ -93,6 +94,7 @@ public class Main {
                 if (arr[i][j].c == '1' || // Target object
                         (i > 0 && (arr[i - 1][j].c == '0' || arr[i - 1][j].c == '1')) || // Branch above
                         (i < arr.length - 1 && (arr[i + 1][j].c == '0' || arr[i + 1][j].c == '1')) || // Branch below
+                        arr[i][j].c == 'w' || // wall
                         j == arr[0].length - 1 // End of row
                 ) {
                     if (!collectedCells.isEmpty()) {
