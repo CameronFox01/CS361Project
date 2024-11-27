@@ -66,7 +66,7 @@ public class Main {
 
         AStar aStar = new AStar();
         AlgorithmTester aStarTester = new AlgorithmTester(aStar, targets);
-        aStarTester.testFunction(1, 10, fileArray[0][0]);
+        aStarTester.testFunction(3, 10, fileArray[0][0], false);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {

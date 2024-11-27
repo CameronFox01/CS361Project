@@ -13,7 +13,9 @@ public class AlgorithmTester {
         this.targets = targets;
     }
 
-    public void testFunction(int numTrials, int numSamples, Vertex startVertex) {
+    public void testFunction(int numTrials, int numSamples, Vertex startVertex, boolean displayPath) {
+        System.out.println("Starting test for " + algorithm.getName());
+
         //Initial run
         AlgorithmResults results = algorithm.runAlgorithm(startVertex, targets);
 
@@ -23,9 +25,12 @@ public class AlgorithmTester {
             return;
         }
 
-        System.out.println("Path found by " + algorithm.getName() + ":");
+        System.out.println(algorithm.getName() + " found path");
 
-        results.pathFound().displayPath(Main.fileArray);
+        if (displayPath) {
+            System.out.println("Path found by " + algorithm.getName() + ":");
+            results.pathFound().displayPath(Main.fileArray);
+        }
 
         System.out.println("Vertices visited: " + results.verticesVisited());
 
