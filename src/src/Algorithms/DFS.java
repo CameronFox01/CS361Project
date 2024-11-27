@@ -5,19 +5,19 @@ import DataStructures.Set;
 import EntryPoints.Main;
 import util.*;
 
-public class DFS {
+public class DFS implements Algorithm {
     private static int estimatedMaxPathWeight;
     private static Path minPath;
     private static int visitedNodes;
 
-    public static Pair<Integer, Path> findPath(Vertex startVertex, int numTargets) {
+    public AlgorithmResults runAlgorithm(Vertex startVertex, int numTargets) {
         estimatedMaxPathWeight = Integer.MAX_VALUE;
         minPath = null;
         visitedNodes = 0;
 
         dfs(1, numTargets, startVertex, new Set<>(), new Path(1));
 
-        return new Pair<>(visitedNodes, minPath);
+        return new AlgorithmResults(visitedNodes, minPath);
     }
 
     private static void dfs(int currDepth, int numTargets, Vertex curr, Set<Vertex> visited, Path path) {
@@ -64,12 +64,19 @@ public class DFS {
     private static void tryUpdateMinPath(Path newPath) {
         if (minPath == null) {
             minPath = new Path(newPath);
+            minPath.setFullPath(true);
             estimatedMaxPathWeight = newPath.getWeight();
         } else {
             if (newPath.getWeight() < minPath.getWeight()) {
                 minPath = new Path(newPath);
+                minPath.setFullPath(true);
                 estimatedMaxPathWeight = newPath.getWeight();
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return "DFS";
     }
 }

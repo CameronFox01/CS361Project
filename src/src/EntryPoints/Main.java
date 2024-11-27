@@ -56,27 +56,13 @@ public class Main {
         }
 
         //This is to start the Dijkstra algorithm
-        int[] startingVertex = {0, 0};
-        Dijkstra.start(weightedGraph ,startingVertex);
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.runAlgorithm(fileArray[0][0], numTargets);
 
-        Pair<Integer, Path> dfsPath = DFS.findPath(fileArray[0][0], numTargets);
+        DFS dfsAlg = new DFS();
 
-        System.out.println("Visited " + dfsPath.getFst() + " nodes.");
-        if (dfsPath.getSnd() == null) {
-            System.out.println("No path found with DFS");
-        } else {
-            dfsPath.getSnd().displayPath(fileArray);
-
-            testFunction(3, 5, () -> DFS.findPath(fileArray[0][0], numTargets));
-        }
-    }
-
-    private static void testFunction(int numTrials, int numSamples, Runnable func) {
-        for (int i = 0; i < numTrials; i++) {
-            ArrayList<Long> runtimes = measureFunctionTime(numSamples, func);
-
-            System.out.println("Mean Time: " + (meanOfRuntimes(runtimes) / 1_000_000) + "ms");
-        }
+        AlgorithmTester dfsTester = new AlgorithmTester(dfsAlg, numTargets);
+        dfsTester.testFunction(3, 10, fileArray[0][0]);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {
@@ -162,35 +148,7 @@ public class Main {
      * method to get fileArray in another file.
      * @return
      */
-    public Vertex[][] getFileArray(){
+    public Vertex[][] getFileArray() {
         return fileArray;
-    }
-
-    private static ArrayList<Long> measureFunctionTime(int numSamples, Runnable func) {
-        ArrayList<Long> runtimes = new ArrayList<>();
-
-        for (int i = 0; i < numSamples; i++) {
-            long startTime = System.nanoTime();
-            func.run();
-            long endTime = System.nanoTime();
-
-            runtimes.add((endTime - startTime));
-        }
-
-        return runtimes;
-    }
-
-    private static long meanOfRuntimes(ArrayList<Long> runtimes) {
-        long total = 0;
-
-        for (Long runtime : runtimes) {
-            total += runtime;
-        }
-
-        return total / runtimes.size();
-    }
-
-    private static long nanoToMs(long nano) {
-        return nano / 1_000_000;
     }
 }
