@@ -56,17 +56,20 @@ public class Main {
             }
         }
 
+        int numTrials = 3;
+        int numSamples = 10;
+
         //This is to start the Dijkstra algorithm
         Dijkstra dijkstra = new Dijkstra();
         //dijkstra.runAlgorithm(fileArray[0][0], targets);
 
         AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
-        dfsTester.testFunction(3, 10, fileArray[0][0], false);
+        dfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
 
 
         AStar aStar = new AStar();
         AlgorithmTester aStarTester = new AlgorithmTester(aStar, targets);
-        aStarTester.testFunction(3, 10, fileArray[0][0], false);
+        aStarTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {

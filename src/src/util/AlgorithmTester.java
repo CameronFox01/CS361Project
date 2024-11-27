@@ -14,7 +14,7 @@ public class AlgorithmTester {
     }
 
     public void testFunction(int numTrials, int numSamples, Vertex startVertex, boolean displayPath) {
-        System.out.println("Starting test for " + algorithm.getName());
+        System.out.println("Starting test for " + algorithm.getName() + " with " + numTrials + " num trials, and " + numSamples + " num samples.");
 
         //Initial run
         AlgorithmResults results = algorithm.runAlgorithm(startVertex, targets);
@@ -55,7 +55,8 @@ public class AlgorithmTester {
         }
 
         //Final Results
-        System.out.println("For " + numTrials + " trial(s) with " + numSamples + " samples each, Mean runtime: " + meanOfRuntimes(meanRuntimes) + "ms");
+        System.out.println("For " + numTrials + " trial(s) with " + numSamples + " sample(s) each, Mean runtime: " + meanOfRuntimes(meanRuntimes) + "ms");
+        System.out.println();
     }
 
     private long meanOfRuntimes(ArrayList<Long> runtimes) {

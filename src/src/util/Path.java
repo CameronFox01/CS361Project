@@ -96,7 +96,7 @@ public class Path {
             }
         }
 
-        System.out.println("Path distance: " + weight);
+        System.out.println("Path distance: " + weight + " vertices");
 
         for (Character[] characters : pathArr) {
             for (int j = 0; j < pathArr[0].length; j++) {
