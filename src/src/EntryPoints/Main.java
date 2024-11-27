@@ -1,5 +1,6 @@
 package EntryPoints;
 
+import Algorithms.AStar;
 import Algorithms.DFS;
 import Algorithms.Dijkstra;
 import util.*;
@@ -16,7 +17,7 @@ public class Main {
     public static Vertex[][] fileArray;
 
     public static WeightedGraph<Vertex> weightedGraph;
-    private static ArrayList<Vertex> targets = new ArrayList<>();
+    private static final ArrayList<Vertex> targets = new ArrayList<>();
 
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
@@ -57,10 +58,13 @@ public class Main {
 
         //This is to start the Dijkstra algorithm
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.runAlgorithm(fileArray[0][0], targets);
+        //dijkstra.runAlgorithm(fileArray[0][0], targets);
 
         AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
-        dfsTester.testFunction(3, 10, fileArray[0][0]);
+        //dfsTester.testFunction(3, 10, fileArray[0][0]);
+
+        AStar aStar = new AStar();
+        aStar.runAlgorithm(fileArray[0][0], targets);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {
