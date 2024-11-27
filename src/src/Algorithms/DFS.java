@@ -1,5 +1,6 @@
 package Algorithms;
 
+import DataStructures.ArrayList;
 import DataStructures.Map;
 import DataStructures.Set;
 import EntryPoints.Main;
@@ -10,12 +11,12 @@ public class DFS implements Algorithm {
     private static Path minPath;
     private static int visitedNodes;
 
-    public AlgorithmResults runAlgorithm(Vertex startVertex, int numTargets) {
+    public AlgorithmResults runAlgorithm(Vertex startVertex, ArrayList<Vertex> targets) {
         estimatedMaxPathWeight = Integer.MAX_VALUE;
         minPath = null;
         visitedNodes = 0;
 
-        dfs(1, numTargets, startVertex, new Set<>(), new Path(1));
+        dfs(1, targets.size(), startVertex, new Set<>(), new Path(1));
 
         return new AlgorithmResults(visitedNodes, minPath);
     }

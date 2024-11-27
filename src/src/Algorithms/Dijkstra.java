@@ -1,5 +1,6 @@
 package Algorithms;
 
+import DataStructures.ArrayList;
 import DataStructures.Graph;
 import DataStructures.WeightedGraph;
 import EntryPoints.Main;
@@ -11,7 +12,7 @@ import util.WeightedEdge;
 import java.util.Arrays;
 
 public class Dijkstra implements Algorithm {
-    public AlgorithmResults runAlgorithm(Vertex startingVertex, int numTargets){
+    public AlgorithmResults runAlgorithm(Vertex startingVertex, ArrayList<Vertex> targets) {
         int startingX = startingVertex.x;
         int startingY = startingVertex.y;
         //Creating the array

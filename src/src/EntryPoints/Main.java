@@ -16,7 +16,7 @@ public class Main {
     public static Vertex[][] fileArray;
 
     public static WeightedGraph<Vertex> weightedGraph;
-    private static int numTargets = 0;
+    private static ArrayList<Vertex> targets = new ArrayList<>();
 
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
@@ -50,18 +50,16 @@ public class Main {
         for (Vertex[] vertices : fileArray) {
             for (int j = 0; j < fileArray[0].length; j++) {
                 if (vertices[j].c == '1') {
-                    numTargets++;
+                    targets.add(vertices[j]);
                 }
             }
         }
 
         //This is to start the Dijkstra algorithm
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.runAlgorithm(fileArray[0][0], numTargets);
+        dijkstra.runAlgorithm(fileArray[0][0], targets);
 
-        DFS dfsAlg = new DFS();
-
-        AlgorithmTester dfsTester = new AlgorithmTester(dfsAlg, numTargets);
+        AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
         dfsTester.testFunction(3, 10, fileArray[0][0]);
     }
 

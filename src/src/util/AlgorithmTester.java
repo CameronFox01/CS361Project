@@ -6,16 +6,16 @@ import EntryPoints.Main;
 
 public class AlgorithmTester {
     private final Algorithm algorithm;
-    private final int numTargets;
+    private final ArrayList<Vertex> targets;
 
-    public AlgorithmTester(Algorithm algorithm, int numTargets) {
+    public AlgorithmTester(Algorithm algorithm, ArrayList<Vertex> targets) {
         this.algorithm = algorithm;
-        this.numTargets = numTargets;
+        this.targets = targets;
     }
 
     public void testFunction(int numTrials, int numSamples, Vertex startVertex) {
         //Initial run
-        AlgorithmResults results = algorithm.runAlgorithm(startVertex, numTargets);
+        AlgorithmResults results = algorithm.runAlgorithm(startVertex, targets);
 
         //Check if path found
         if (!results.pathFound().isFullPath()) {
@@ -34,7 +34,7 @@ public class AlgorithmTester {
         for (int i = 0; i < numTrials; i++) {
             for (int j = 0; j < numSamples; j++) {
                 long startTime = System.nanoTime();
-                algorithm.runAlgorithm(startVertex, numTargets);
+                algorithm.runAlgorithm(startVertex, targets);
                 long endTime = System.nanoTime();
 
                 runtimes.add((endTime - startTime));
