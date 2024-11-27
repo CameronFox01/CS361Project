@@ -6,6 +6,8 @@ import DataStructures.Set;
 import EntryPoints.Main;
 import util.*;
 
+import java.util.Comparator;
+
 public class DFS implements Algorithm {
     private static int estimatedMaxPathWeight;
     private static Path minPath;

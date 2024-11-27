@@ -21,6 +21,16 @@ public class MinHeap<T> {
         restoreHeapPropertyPostAddition();
     }
 
+    public boolean contains(T o, Comparator<T> comparator) {
+        for (T contained : heap) {
+            if (comparator.compare(contained, o) == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public T peek() {
         if (heap.isEmpty()) {
             throw new NoSuchElementException("Heap is empty");

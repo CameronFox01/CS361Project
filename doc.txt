@@ -1,0 +1,47 @@
+    /*
+    function A_Star(start, goal, graph, heuristic):
+    // Priority queue to store nodes with their f(n) values
+    openSet ← PriorityQueue()
+    //f(n) = g(n) + h(n)
+    openSet.add(start, f(start) = g(start) + h(start))
+
+    // Maps to store the cost and path
+    gScore ← map with default value ∞
+    gScore[start] ← 0
+
+    fScore ← map with default value ∞
+    fScore[start] ← heuristic(start, goal)
+
+    cameFrom ← empty map // Tracks the path
+
+    while openSet is not empty:
+        current ← node in openSet with lowest fScore
+
+        if current = goal:
+            return reconstruct_path(cameFrom, current)
+
+        openSet.remove(current)
+
+        for each neighbor in neighbors(current, graph):
+            tentative_gScore ← gScore[current] + cost(current, neighbor)
+
+            if tentative_gScore < gScore[neighbor]:
+                // A better path is found
+                cameFrom[neighbor] ← current
+                gScore[neighbor] ← tentative_gScore
+                fScore[neighbor] ← gScore[neighbor] + heuristic(neighbor, goal)
+
+                if neighbor not in openSet:
+                    openSet.add(neighbor, fScore[neighbor])
+
+    return "No path found" // If goal is not reached
+
+function reconstruct_path(cameFrom, current):
+    path ← []
+    while current in cameFrom:
+        path.prepend(current)
+        current ← cameFrom[current]
+    path.prepend(current) // Add the start node
+    return path
+
+     */
