@@ -135,7 +135,7 @@ public class AStar implements Algorithm {
 
         return path;
     }
-    
+
     private boolean mapContains(Map<Vertex, Vertex> map, Vertex vertex) {
         return map.keys().contains(vertex) || map.values().contains(vertex);
     }

@@ -36,7 +36,8 @@ public class AlgorithmTester {
 
         //Do n runs for t trials
         ArrayList<Long> runtimes = new ArrayList<>();
-        ArrayList<Long> meanRuntimes = new ArrayList<>();
+        ArrayList<Long> meanRuntimesMS = new ArrayList<>();
+        ArrayList<Long> meanRuntimesNS = new ArrayList<>();
 
         for (int i = 0; i < numTrials; i++) {
             for (int j = 0; j < numSamples; j++) {
@@ -47,15 +48,17 @@ public class AlgorithmTester {
                 runtimes.add((endTime - startTime));
             }
 
-            long meanTime = nanoToMs(meanOfRuntimes(runtimes));
+            long meanTimeInNS = meanOfRuntimes(runtimes);
+            long meanTimeInMS = nanoToMs(meanTimeInNS);
 
-            System.out.println("Mean time of trial #" + (i+1) + ": " + meanTime + "ms");
-            meanRuntimes.add(meanTime);
+            System.out.println("Mean time of trial #" + (i+1) + ": " + meanTimeInMS + "ms, " + meanTimeInNS + "ns");
+            meanRuntimesMS.add(meanTimeInMS);
+            meanRuntimesNS.add(meanTimeInNS);
             runtimes.clear();
         }
 
         //Final Results
-        System.out.println("For " + numTrials + " trial(s) with " + numSamples + " sample(s) each, Mean runtime: " + meanOfRuntimes(meanRuntimes) + "ms");
+        System.out.println("For " + numTrials + " trial(s) with " + numSamples + " sample(s) each, Mean runtime: " + meanOfRuntimes(meanRuntimesMS) + "ms, " + meanOfRuntimes(meanRuntimesNS) + "ns");
         System.out.println();
     }
 
