@@ -21,8 +21,8 @@ public class Main {
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
-            //File file = new File(args[0]);
+            //File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+            File file = new File(args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
@@ -56,8 +56,7 @@ public class Main {
         }
 
         //This is to start the Dijkstra algorithm
-        int[] startingVertex = {0, 0};
-        Dijkstra.start(weightedGraph ,startingVertex);
+        Path dijkstraPath = Dijkstra.start(weightedGraph ,0);
 
         Path dfsPath = DFS.findPath(fileArray[0][0], numTargets);
 

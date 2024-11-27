@@ -1,38 +1,49 @@
 package Algorithms;
 
-import DataStructures.Graph;
-import DataStructures.WeightedGraph;
-import util.Edge;
-import util.Vertex;
-import util.WeightedEdge;
+import DataStructures.*;
+import util.*;
 
 import java.util.Arrays;
 
-public class Dijkstra {
-    public static void start(WeightedGraph<Vertex> graph, int[] startingVertex){
-        int startingX = startingVertex[0];
-        int startingY = startingVertex[1];
-        //Creating the array
-        double[] visitedArray = new double[graph.getVertices().size()];
-        //Setting the array to positive infinity
-        Arrays.fill(visitedArray, Double.POSITIVE_INFINITY);
-        int index = 0;
-        for(Vertex vertex : graph.getVertices()){
-            if(startingX == vertex.x && startingY == vertex.y){
-                visitedArray[index] = 0.0;
-                break;
-            }
-            index++;
-        }
-
-//        for(Vertex vertex : graph.getVertices()){
-//            System.out.println(vertex);
+//public class Dijkstra {
+//    private static Path minPath;
+//    public static Path start(WeightedGraph<Vertex> graph, int startingVertex){
+//        int v = graph.size();
+//        int[] dist = new int[v];
+//        Arrays.fill(dist, Integer.MAX_VALUE);
+//        boolean[] visited = new boolean[v];
+//
+//        PriorityQueue<Node> pq = new PriorityQueue<>();
+//        pq.offer(new Node(startingVertex, 0));
+//
+//        while(!pq.isEmpty()){
+//            Node current = pq.poll();
+//            Vertex u = current.node;
+//
+//           int uIndex = graph.g
 //        }
 //
-//        for(Edge edge : graph.getEdges()){
-//            System.out.println(edge);
-//        }
-
-        //graph.displayGraph();
+////        for(Vertex vertex : graph.getVertices()){
+////            System.out.println(vertex);
+////        }
+////
+////        for(Edge edge : graph.getEdges()){
+////            System.out.println(edge);
+////        }
+//
+//        //graph.displayGraph();
+//        return minPath;
+//    }
+//}
+class Node implements  Comparable<Node>{
+    Vertex node;
+    int cost;
+    Node(Vertex node, int cost){
+        this.node = node;
+        this.cost = cost;
+    }
+    @Override
+    public int compareTo(Node other){
+        return Integer.compare(this.cost, other.cost);
     }
 }

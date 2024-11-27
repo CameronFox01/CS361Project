@@ -100,4 +100,13 @@ public class LinkedList<T> {
             size++;
         }
     }
+    public Node<T> getHead(){
+        return head;
+    }
+    public int getSize(){
+     return size;
+    }
+    public void setSize(){
+        size++;
+    }
 }
