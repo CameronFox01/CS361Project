@@ -7,10 +7,9 @@ import util.*;
 import java.util.Comparator;
 
 public class AStar implements Algorithm {
-    private int memoryUsed;
-
+    @Override
     public AlgorithmResults runAlgorithm(Vertex startVertex, ArrayList<Vertex> targets) {
-        memoryUsed = 0;
+        int verticesVisited = 0;
 
         ArrayList<Pair<Pair<Vertex, Vertex>, Integer>> orderedTargets = orderTargetsByDistance(startVertex, targets);
         ArrayList<Path> uncombinedPaths = new ArrayList<>();
@@ -42,7 +41,7 @@ public class AStar implements Algorithm {
             while (!openSet.isEmpty()) {
                 Pair<Vertex, Integer> current = openSet.poll();
 
-                memoryUsed++;
+                verticesVisited++;
 
                 if (current.getFst() == currentTarget) {
                     uncombinedPaths.add(reconstructPath(cameFrom, current.getFst(), currentFrom));
@@ -73,7 +72,7 @@ public class AStar implements Algorithm {
         Path combinedPath = combinePaths(uncombinedPaths);
         combinedPath.setFullPath(true);
 
-        return new AlgorithmResults(memoryUsed, combinedPath);
+        return new AlgorithmResults(verticesVisited, combinedPath);
     }
 
 

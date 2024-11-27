@@ -13,6 +13,7 @@ public class DFS implements Algorithm {
     private static Path minPath;
     private static int visitedNodes;
 
+    @Override
     public AlgorithmResults runAlgorithm(Vertex startVertex, ArrayList<Vertex> targets) {
         estimatedMaxPathWeight = Integer.MAX_VALUE;
         minPath = null;

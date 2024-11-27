@@ -61,7 +61,7 @@ public class Main {
         //dijkstra.runAlgorithm(fileArray[0][0], targets);
 
         AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
-        //dfsTester.testFunction(3, 10, fileArray[0][0]);
+        dfsTester.testFunction(3, 10, fileArray[0][0], false);
 
 
         AStar aStar = new AStar();
