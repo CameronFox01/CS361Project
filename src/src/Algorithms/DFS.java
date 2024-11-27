@@ -62,11 +62,13 @@ public class DFS implements Algorithm {
         //Continue dfs
         for (WeightedEdge<Vertex,Vertex> edge : prioritizeEdgesInCorrectDirection(adjacentVertices, curr)) {
             //Get opposite vertex
-            Vertex otherVertex = (edge.getFst() == curr) ? edge.getSnd() : edge.getFst();
+            Vertex neighbor = (edge.getFst() == curr) ? edge.getSnd() : edge.getFst();
 
             //Adjust weight
             path.setWeight(oldWeight + edge.getWeight());
-            dfs(currDepth + edge.getWeight(), target, otherVertex, visited, path);
+
+            //Recurse
+            dfs(currDepth + edge.getWeight(), target, neighbor, visited, path);
         }
 
         //Backtrack
@@ -77,12 +79,12 @@ public class DFS implements Algorithm {
     private void tryUpdateMinPath(Path newPath) {
         if (minPath == null) {
             minPath = new Path(newPath);
-            minPath.setFullPath(true);
+            minPath.setFullPath();
             estimatedMaxPathWeight = newPath.getWeight();
         } else {
             if (newPath.getWeight() < minPath.getWeight()) {
                 minPath = new Path(newPath);
-                minPath.setFullPath(true);
+                minPath.setFullPath();
                 estimatedMaxPathWeight = newPath.getWeight();
             }
         }
@@ -111,7 +113,7 @@ public class DFS implements Algorithm {
     }
 
     private ArrayList<Pair<Pair<Vertex, Vertex>, Integer>> orderTargetsByDistance(Vertex startVertex, ArrayList<Vertex> targets) {
-        // Create a copy of the targets to avoid modifying the original list
+        //Create a copy of the targets to avoid modifying the original list
         ArrayList<Vertex> targetsCopy = new ArrayList<>(targets);
         ArrayList<Pair<Vertex, Integer>> orderedTargets = new ArrayList<>();
         Vertex currentVertex = startVertex;
@@ -174,7 +176,7 @@ public class DFS implements Algorithm {
         }
 
         combined.setWeight(combinedWeight);
-        combined.setFullPath(true);
+        combined.setFullPath();
 
         return combined;
     }

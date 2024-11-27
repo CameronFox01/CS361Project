@@ -69,8 +69,9 @@ public class AStar implements Algorithm {
             if (uncombinedPaths.isEmpty()) return new AlgorithmResults(0, new Path());
         }
 
+        //Combine all paths into full path
         Path combinedPath = combinePaths(uncombinedPaths);
-        combinedPath.setFullPath(true);
+        combinedPath.setFullPath();
 
         return new AlgorithmResults(verticesVisited, combinedPath);
     }
@@ -134,7 +135,7 @@ public class AStar implements Algorithm {
 
         return path;
     }
-
+    
     private boolean mapContains(Map<Vertex, Vertex> map, Vertex vertex) {
         return map.keys().contains(vertex) || map.values().contains(vertex);
     }

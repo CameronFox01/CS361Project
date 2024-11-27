@@ -5,7 +5,7 @@ import DataStructures.ArrayList;
 public class Path {
     private int weight;
     private final ArrayList<Vertex> path;
-    private boolean fullPath = false;
+    private boolean isFullPath = false;
 
     public Path() {
         weight = 0;
@@ -36,11 +36,11 @@ public class Path {
     }
 
     public boolean isFullPath() {
-        return fullPath;
+        return isFullPath;
     }
 
-    public void setFullPath(boolean fullPath) {
-        this.fullPath = fullPath;
+    public void setFullPath() {
+        this.isFullPath = true;
     }
 
     public void add(Vertex vertex) {
