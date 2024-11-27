@@ -27,6 +27,8 @@ public class AlgorithmTester {
 
         results.pathFound().displayPath(Main.fileArray);
 
+        System.out.println("Vertices visited: " + results.verticesVisited());
+
         //Do n runs for t trials
         ArrayList<Long> runtimes = new ArrayList<>();
         ArrayList<Long> meanRuntimes = new ArrayList<>();
@@ -48,8 +50,7 @@ public class AlgorithmTester {
         }
 
         //Final Results
-        System.out.println("For " + numTrials + " trials with " + numSamples + " samples each, Mean runtime: " + meanOfRuntimes(meanRuntimes) + "ms");
-        System.out.println("Memory used: " + results.memoryUsed());
+        System.out.println("For " + numTrials + " trial(s) with " + numSamples + " samples each, Mean runtime: " + meanOfRuntimes(meanRuntimes) + "ms");
     }
 
     private long meanOfRuntimes(ArrayList<Long> runtimes) {

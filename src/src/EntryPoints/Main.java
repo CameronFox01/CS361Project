@@ -63,8 +63,10 @@ public class Main {
         AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
         //dfsTester.testFunction(3, 10, fileArray[0][0]);
 
+
         AStar aStar = new AStar();
-        aStar.runAlgorithm(fileArray[0][0], targets);
+        AlgorithmTester aStarTester = new AlgorithmTester(aStar, targets);
+        aStarTester.testFunction(1, 10, fileArray[0][0]);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {
