@@ -1,5 +1,6 @@
 package EntryPoints;
 
+import Algorithms.AStar;
 import Algorithms.DFS;
 import Algorithms.Dijkstra;
 import util.*;
@@ -16,13 +17,13 @@ public class Main {
     public static Vertex[][] fileArray;
 
     public static WeightedGraph<Vertex> weightedGraph;
-    private static int numTargets = 0;
+    private static final ArrayList<Vertex> targets = new ArrayList<>();
 
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-            //File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
-            File file = new File(args[0]);
+            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+            //File file = new File(args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
@@ -50,31 +51,20 @@ public class Main {
         for (Vertex[] vertices : fileArray) {
             for (int j = 0; j < fileArray[0].length; j++) {
                 if (vertices[j].c == '1') {
-                    numTargets++;
+                    targets.add(vertices[j]);
                 }
             }
         }
 
         //This is to start the Dijkstra algorithm
-        Path dijkstraPath = Dijkstra.start(weightedGraph ,0);
+        Dijkstra dijkstra = new Dijkstra();
+        //dijkstra.runAlgorithm(fileArray[0][0], targets);
 
-        Path dfsPath = DFS.findPath(fileArray[0][0], numTargets);
+        AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
+        //dfsTester.testFunction(3, 10, fileArray[0][0]);
 
-        if (dfsPath == null) {
-            System.out.println("No path found with DFS");
-        } else {
-            dfsPath.displayPath(fileArray);
-
-            testFunction(3, 5, () -> DFS.findPath(fileArray[0][0], numTargets));
-        }
-    }
-
-    private static void testFunction(int numTrials, int numSamples, Runnable func) {
-        for (int i = 0; i < numTrials; i++) {
-            ArrayList<Long> runtimes = measureFunctionTime(numSamples, func);
-
-            System.out.println("Mean Time: " + (meanOfRuntimes(runtimes) / 1_000_000) + "ms");
-        }
+        AStar aStar = new AStar();
+        aStar.runAlgorithm(fileArray[0][0], targets);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {
@@ -160,35 +150,7 @@ public class Main {
      * method to get fileArray in another file.
      * @return
      */
-    public Vertex[][] getFileArray(){
+    public Vertex[][] getFileArray() {
         return fileArray;
-    }
-
-    private static ArrayList<Long> measureFunctionTime(int numSamples, Runnable func) {
-        ArrayList<Long> runtimes = new ArrayList<>();
-
-        for (int i = 0; i < numSamples; i++) {
-            long startTime = System.nanoTime();
-            func.run();
-            long endTime = System.nanoTime();
-
-            runtimes.add((endTime - startTime));
-        }
-
-        return runtimes;
-    }
-
-    private static long meanOfRuntimes(ArrayList<Long> runtimes) {
-        long total = 0;
-
-        for (Long runtime : runtimes) {
-            total += runtime;
-        }
-
-        return total / runtimes.size();
-    }
-
-    private static long nanoToMs(long nano) {
-        return nano / 1_000_000;
     }
 }

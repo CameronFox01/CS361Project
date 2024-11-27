@@ -12,6 +12,16 @@ public class Vertex {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o instanceof Vertex vertex) {
+            return (x == vertex.x) && (y == vertex.y);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public String toString() {
         return String.valueOf("(c:" + c + ", x:" + x + ", y:" + y + ")");
     }

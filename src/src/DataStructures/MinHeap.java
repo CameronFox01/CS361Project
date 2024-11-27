@@ -1,26 +1,41 @@
 package DataStructures;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
-public class MinHeap<Number> {
-    private final ArrayList<Number> heap;
+public class MinHeap<T> {
+    private final ArrayList<T> heap;
+    private final Comparator<? super T> comparator;
 
-    public MinHeap() {
-        heap = new ArrayList<>();
+    public MinHeap(Comparator<? super T> comparator) {
+        if (comparator == null) {
+            throw new IllegalArgumentException("Comparator cannot be null");
+        }
+        this.comparator = comparator;
+        this.heap = new ArrayList<>();
     }
 
-    public void add(Number o) {
-        heap.add(o);
-
+    public void add(T element) {
+        heap.add(element);
         restoreHeapPropertyPostAddition();
     }
 
-    public Number peek() {
-        if (heap.isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            return heap.getFirst();
+    public boolean contains(T o, Comparator<T> comparator) {
+        for (T contained : heap) {
+            if (comparator.compare(contained, o) == 0) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    public T peek() {
+        if (heap.isEmpty()) {
+            throw new NoSuchElementException("Heap is empty");
+        }
+        return heap.get(0);
     }
 
     public int size() {
@@ -31,122 +46,80 @@ public class MinHeap<Number> {
         return heap.isEmpty();
     }
 
-    public Number poll() {
+    public T poll() {
         if (heap.isEmpty()) {
-            throw new NoSuchElementException("Heap empty");
+            throw new NoSuchElementException("Heap is empty");
         }
 
         if (heap.size() == 1) {
-            return heap.removeFirst();
+            return heap.remove(0);
         }
 
-        // Remove head and replace with last element
-        Number head = heap.getFirst();
-        heap.set(0, heap.removeLast());
-
+        // Remove root and replace it with the last element
+        T root = heap.get(0);
+        heap.set(0, heap.remove(heap.size() - 1));
         restoreHeapPropertyPostPop();
-
-        return head;
+        return root;
     }
 
-
     private void swap(int i, int j) {
-        Number temp = heap.get(i);
+        T temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
 
     private int leftChildFromIndex(int i) {
-        return i * 2 + 1;
+        return 2 * i + 1;
     }
 
     private int rightChildFromIndex(int i) {
-        return i * 2 + 2;
-    }
-
-    private Number getLeftChildFromIndex(int index) {
-        return (heap.size() > index * 2 + 1) ? heap.get(leftChildFromIndex(index)) : null;
-    }
-
-    private Number getRightChildFromIndex(int index) {
-        return (heap.size() > index * 2 + 2) ? heap.get(rightChildFromIndex(index)) : null;
+        return 2 * i + 2;
     }
 
     private void restoreHeapPropertyPostAddition() {
-        int currNode = heap.size() - 1;
+        int currentIndex = heap.size() - 1;
 
-        //While parent is larger, adjust
-        while(currNode != 0 && greaterThan(heap.get(Math.floorDiv(currNode - 1, 2)), heap.get(currNode))) {
-            //Swap these
-            Number temp = heap.get(Math.floorDiv(currNode - 1, 2));
-            heap.set(Math.floorDiv(currNode - 1, 2), heap.get(currNode));
-            heap.set(currNode, temp);
+        while (currentIndex > 0) {
+            int parentIndex = (currentIndex - 1) / 2;
 
-            currNode = Math.floorDiv(currNode - 1, 2);
+            if (comparator.compare(heap.get(parentIndex), heap.get(currentIndex)) <= 0) {
+                break;
+            }
+
+            swap(currentIndex, parentIndex);
+            currentIndex = parentIndex;
         }
     }
 
     private void restoreHeapPropertyPostPop() {
-        //Restore heap property
-        int currIndex = 0;
+        int currentIndex = 0;
+
         while (true) {
-            int leftIndex = leftChildFromIndex(currIndex);
-            int rightIndex = rightChildFromIndex(currIndex);
+            int leftIndex = leftChildFromIndex(currentIndex);
+            int rightIndex = rightChildFromIndex(currentIndex);
+            int smallestIndex = currentIndex;
 
-            //If no children, we're done
-            if (leftIndex >= heap.size()) {
+            if (leftIndex < heap.size() &&
+                    comparator.compare(heap.get(leftIndex), heap.get(smallestIndex)) < 0) {
+                smallestIndex = leftIndex;
+            }
+
+            if (rightIndex < heap.size() &&
+                    comparator.compare(heap.get(rightIndex), heap.get(smallestIndex)) < 0) {
+                smallestIndex = rightIndex;
+            }
+
+            if (smallestIndex == currentIndex) {
                 break;
             }
 
-            //Determine the smaller child
-            int minIndex = leftIndex;
-            if (rightIndex < heap.size() && greaterThan(heap.get(leftIndex), heap.get(rightIndex))) {
-                minIndex = rightIndex;
-            }
-
-            //Swap if the current node is greater than the smaller child
-            if (greaterThan(heap.get(currIndex), heap.get(minIndex))) {
-                swap(currIndex, minIndex);
-                currIndex = minIndex;
-            } else {
-                break;
-            }
+            swap(currentIndex, smallestIndex);
+            currentIndex = smallestIndex;
         }
     }
 
-    private boolean greaterThan(Number x, Number y) {
-        switch (x) {
-            case Integer int1 -> {
-                int int2 = (Integer) y;
-
-                return int1 > int2;
-            }
-            case Double double1 -> {
-                double double2 = (Double) y;
-
-                return double1 > double2;
-            }
-            case Float float1 -> {
-                float float2 = (Float) y;
-
-                return float1 > float2;
-            }
-            case Short short1 -> {
-                short short2 = (Short) y;
-
-                return short1 > short2;
-            }
-            case null, default -> {
-                long long1 = (Long) x;
-                long long2 = (Long) y;
-
-                return long1 > long2;
-            }
-        }
-    }
-
-    public List<Number> toList() {
-        return new List<>(heap);
+    public ArrayList<T> toList() {
+        return new ArrayList<>(heap);
     }
 
     @Override

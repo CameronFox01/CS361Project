@@ -1,26 +1,31 @@
 package Algorithms;
 
+import DataStructures.ArrayList;
+import DataStructures.Map;
 import DataStructures.Set;
 import EntryPoints.Main;
 import util.*;
 
-public class DFS {
+import java.util.Comparator;
+
+public class DFS implements Algorithm {
     private static int estimatedMaxPathWeight;
     private static Path minPath;
+    private static int visitedNodes;
 
-    public static Path findPath(Vertex startVertex, int numTargets) {
+    public AlgorithmResults runAlgorithm(Vertex startVertex, ArrayList<Vertex> targets) {
         estimatedMaxPathWeight = Integer.MAX_VALUE;
         minPath = null;
+        visitedNodes = 0;
 
-        dfs(1, numTargets, startVertex, new Set<>(), new Path(1));
+        dfs(1, targets.size(), startVertex, new Set<>(), new Path(1));
 
-        Path pathFound = minPath;
-        minPath = null;
-
-        return pathFound;
+        return new AlgorithmResults(visitedNodes, minPath);
     }
 
     private static void dfs(int currDepth, int numTargets, Vertex curr, Set<Vertex> visited, Path path) {
+        visitedNodes++;
+
         if (currDepth > estimatedMaxPathWeight) return;
 
         if (!visited.tryAdd(curr)) return;
@@ -35,7 +40,7 @@ public class DFS {
                 tryUpdateMinPath(path);
 
                 //Backtrack
-                visited.remove(curr);
+                visited.removeLast();
                 path.removeLast();
                 return;
             }
@@ -55,19 +60,26 @@ public class DFS {
         }
 
         //Backtrack
-        visited.remove(curr);
+        visited.removeLast();
         path.removeLast();
     }
 
     private static void tryUpdateMinPath(Path newPath) {
         if (minPath == null) {
             minPath = new Path(newPath);
+            minPath.setFullPath(true);
             estimatedMaxPathWeight = newPath.getWeight();
         } else {
             if (newPath.getWeight() < minPath.getWeight()) {
                 minPath = new Path(newPath);
+                minPath.setFullPath(true);
                 estimatedMaxPathWeight = newPath.getWeight();
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return "DFS";
     }
 }
