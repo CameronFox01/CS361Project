@@ -1,3 +1,3 @@
 package util;
 
-public record AlgorithmResults(int memoryUsed, Path pathFound) { }
+public record AlgorithmResults(int verticesVisited, Path pathFound) { }

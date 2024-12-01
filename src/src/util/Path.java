@@ -5,7 +5,7 @@ import DataStructures.ArrayList;
 public class Path {
     private int weight;
     private final ArrayList<Vertex> path;
-    private boolean fullPath = false;
+    private boolean isFullPath = false;
 
     public Path() {
         weight = 0;
@@ -36,11 +36,11 @@ public class Path {
     }
 
     public boolean isFullPath() {
-        return fullPath;
+        return isFullPath;
     }
 
-    public void setFullPath(boolean fullPath) {
-        this.fullPath = fullPath;
+    public void setFullPath() {
+        this.isFullPath = true;
     }
 
     public void add(Vertex vertex) {
@@ -60,7 +60,7 @@ public class Path {
 
         for (int i = 0; i < pathArr.length; i++) {
             for (int j = 0; j < pathArr[0].length; j++) {
-                pathArr[i][j] = (fileArray[i][j].c == '1') ? '1' : '_';
+                pathArr[i][j] = (fileArray[i][j].c == '1') ? '1' : '.';
             }
         }
 
@@ -73,15 +73,11 @@ public class Path {
                 // Ensure we're moving in the correct direction
                 if (start.x < end.x) {
                     for (int j = start.x; j <= end.x; j++) {
-                        if (pathArr[start.y][j] != '1') {
-                            pathArr[start.y][j] = 'x';
-                        }
+                        pathArr[start.y][j] = 'x';
                     }
                 } else {
                     for (int j = start.x; j >= end.x; j--) {
-                        if (pathArr[start.y][j] != '1') {
-                            pathArr[start.y][j] = 'x';
-                        }
+                        pathArr[start.y][j] = 'x';
                     }
                 }
             }
@@ -90,21 +86,17 @@ public class Path {
                 // Ensure we're moving in the correct direction
                 if (start.y < end.y) {
                     for (int j = start.y; j <= end.y; j++) {
-                        if (pathArr[j][start.x] != '1') {
-                            pathArr[j][start.x] = 'x';
-                        }
+                        pathArr[j][start.x] = 'x';
                     }
                 } else {
                     for (int j = start.y; j >= end.y; j--) {
-                        if (pathArr[j][start.x] != '1') {
-                            pathArr[j][start.x] = 'x';
-                        }
+                        pathArr[j][start.x] = 'x';
                     }
                 }
             }
         }
 
-        System.out.println("Path distance: " + weight);
+        System.out.println("Path distance: " + weight + " vertices");
 
         for (Character[] characters : pathArr) {
             for (int j = 0; j < pathArr[0].length; j++) {

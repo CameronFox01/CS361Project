@@ -13,7 +13,9 @@ public class AlgorithmTester {
         this.targets = targets;
     }
 
-    public void testFunction(int numTrials, int numSamples, Vertex startVertex) {
+    public void testFunction(int numTrials, int numSamples, Vertex startVertex, boolean displayPath) {
+        System.out.println("Starting test for " + algorithm.getName() + " with " + numTrials + " num trials, and " + numSamples + " num samples.");
+
         //Initial run
         AlgorithmResults results = algorithm.runAlgorithm(startVertex, targets);
 
@@ -23,13 +25,19 @@ public class AlgorithmTester {
             return;
         }
 
-        System.out.println("Path found by " + algorithm.getName() + ":");
+        System.out.println(algorithm.getName() + " found path");
 
-        results.pathFound().displayPath(Main.fileArray);
+        if (displayPath) {
+            System.out.println("Path found by " + algorithm.getName() + ":");
+            results.pathFound().displayPath(Main.fileArray);
+        }
+
+        System.out.println("Vertices visited: " + results.verticesVisited());
 
         //Do n runs for t trials
         ArrayList<Long> runtimes = new ArrayList<>();
-        ArrayList<Long> meanRuntimes = new ArrayList<>();
+        ArrayList<Long> meanRuntimesMS = new ArrayList<>();
+        ArrayList<Long> meanRuntimesNS = new ArrayList<>();
 
         for (int i = 0; i < numTrials; i++) {
             for (int j = 0; j < numSamples; j++) {
@@ -40,16 +48,18 @@ public class AlgorithmTester {
                 runtimes.add((endTime - startTime));
             }
 
-            long meanTime = nanoToMs(meanOfRuntimes(runtimes));
+            long meanTimeInNS = meanOfRuntimes(runtimes);
+            long meanTimeInMS = nanoToMs(meanTimeInNS);
 
-            System.out.println("Mean time of trial #" + (i+1) + ": " + meanTime + "ms");
-            meanRuntimes.add(meanTime);
+            System.out.println("Mean time of trial #" + (i+1) + ": " + meanTimeInMS + "ms, " + meanTimeInNS + "ns");
+            meanRuntimesMS.add(meanTimeInMS);
+            meanRuntimesNS.add(meanTimeInNS);
             runtimes.clear();
         }
 
         //Final Results
-        System.out.println("For " + numTrials + " trials with " + numSamples + " samples each, Mean runtime: " + meanOfRuntimes(meanRuntimes) + "ms");
-        System.out.println("Memory used: " + results.memoryUsed());
+        System.out.println("For " + numTrials + " trial(s) with " + numSamples + " sample(s) each, Mean runtime: " + meanOfRuntimes(meanRuntimesMS) + "ms, " + meanOfRuntimes(meanRuntimesNS) + "ns");
+        System.out.println();
     }
 
     private long meanOfRuntimes(ArrayList<Long> runtimes) {
