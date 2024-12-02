@@ -22,8 +22,8 @@ public class Main {
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
-            //File file = new File(args[0]);
+            //File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+            File file = new File(args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
@@ -60,12 +60,13 @@ public class Main {
         int numSamples = 10;
 
         //This is to start the Dijkstra algorithm
-        Dijkstra dijkstra = new Dijkstra();
-        //dijkstra.runAlgorithm(fileArray[0][0], targets);
+        //Dijkstra dijkstra = new Dijkstra();
 
+        AlgorithmTester dijkstraTester = new AlgorithmTester(new Dijkstra(), targets);
         AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
         AlgorithmTester aStarTester = new AlgorithmTester(new AStar(), targets);
 
+        dijkstraTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
         aStarTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
         dfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
     }
