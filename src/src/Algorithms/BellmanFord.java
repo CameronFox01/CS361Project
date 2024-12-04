@@ -2,6 +2,7 @@ package Algorithms;
 
 import DataStructures.ArrayList;
 import DataStructures.List;
+import DataStructures.Map;
 import EntryPoints.Main;
 import util.AlgorithmResults;
 import util.Path;
@@ -14,16 +15,85 @@ import util.WeightedEdge;
 // edge weights. Dijkstra will inifit loop while Bellman Ford while not loop forever
 
 
-public class BellmanFord implements Algorithm{
+public class BellmanFord implements Algorithm {
+
     @Override
     public AlgorithmResults runAlgorithm(Vertex startVertex, ArrayList<Vertex> targets) {
         int verticesVisited = 0;
         ArrayList<Path> uncombinedPaths = new ArrayList<>();
 
+        // Iterate for each target vertex
+        for (Vertex target : targets) {
+            // Initialize distance map and predecessor map
+            Map<Vertex, Integer> distances = new Map<>();
+            Map<Vertex, Vertex> predecessors = new Map<>();
 
+            // Set initial distances to infinity and start vertex to 0
+            for (Vertex vertex : Main.weightedGraph.getVertices()) {
+                distances.put(vertex, Integer.MAX_VALUE);
+            }
+            distances.put(startVertex, 0);
+
+            // Relax all edges V-1 times
+            int vertexCount = Main.weightedGraph.getVertices().size();
+            for (int i = 1; i < vertexCount; i++) {
+                for (WeightedEdge<Vertex, Vertex> edge : Main.weightedGraph.getEdges()) {
+                    Vertex u = edge.getFst();
+                    Vertex v = edge.getSnd();
+                    int weight = edge.getWeight();
+
+                    if (distances.get(u) != Integer.MAX_VALUE && distances.get(u) + weight < distances.get(v)) {
+                        distances.put(v, distances.get(u) + weight);
+                        predecessors.put(v, u);
+                    }
+                }
+            }
+
+            // Check for negative-weight cycles
+            for (WeightedEdge<Vertex, Vertex> edge : Main.weightedGraph.getEdges()) {
+                Vertex u = edge.getFst();
+                Vertex v = edge.getSnd();
+                int weight = edge.getWeight();
+
+                if (distances.get(u) != Integer.MAX_VALUE && distances.get(u) + weight < distances.get(v)) {
+                    System.out.println("Graph contains a negative weight cycle");
+                    return new AlgorithmResults(0, new Path());  // Handle error appropriately
+                }
+            }
+
+            // Reconstruct the shortest path to the target
+            if (distances.get(target) < Integer.MAX_VALUE) {
+                Path path = reconstructPath(predecessors, target, startVertex);
+                uncombinedPaths.add(path);
+                verticesVisited += path.getPath().size();  // Count visited vertices in the path
+            }
+        }
+
+        // If no paths were found, return an empty path
+        if (uncombinedPaths.isEmpty()) {
+            return new AlgorithmResults(0, new Path());
+        }
+
+        // Combine all paths into one if needed
         Path combinedPath = combinePaths(uncombinedPaths);
         combinedPath.setFullPath();
-        return null;
+
+        return new AlgorithmResults(verticesVisited, combinedPath);
+    }
+
+    private Path reconstructPath(Map<Vertex, Vertex> predecessors, Vertex target, Vertex startVertex) {
+        Path path = new Path();
+        path.add(target);
+
+        // Trace the path back to the start vertex using the predecessors map
+        while (predecessors.containsKey(target)) {
+            target = predecessors.get(target);
+            path.add(target);
+        }
+
+        // Reverse the path to get start-to-target order
+        path.reverse();
+        return path;
     }
 
     private Path combinePaths(ArrayList<Path> paths) {
@@ -39,7 +109,6 @@ public class BellmanFord implements Algorithm{
         }
 
         combined.setWeight(calculatePathDistance(combined));
-
         return combined;
     }
 
@@ -56,11 +125,12 @@ public class BellmanFord implements Algorithm{
                 }
             }
         }
+
         return distance;
     }
 
     @Override
     public String getName() {
-        return "BellmanFord";
+        return "Bellman-Ford";
     }
 }

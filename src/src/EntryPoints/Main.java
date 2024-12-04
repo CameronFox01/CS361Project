@@ -1,9 +1,6 @@
 package EntryPoints;
 
-import Algorithms.AStar;
-import Algorithms.BFS;
-import Algorithms.DFS;
-import Algorithms.Dijkstra;
+import Algorithms.*;
 
 import util.*;
 import java.io.File;
@@ -66,7 +63,9 @@ public class Main {
         AlgorithmTester dfsTester = new AlgorithmTester(new DFS(), targets);
         AlgorithmTester aStarTester = new AlgorithmTester(new AStar(), targets);
         AlgorithmTester bfsTester = new AlgorithmTester(new BFS(), targets);
+        AlgorithmTester bellmanFordTester = new AlgorithmTester(new BellmanFord(), targets);
 
+        bellmanFordTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
         //dijkstraTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
         //aStarTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
         dfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
