@@ -55,6 +55,20 @@ public class Path {
         path.removeLast();
     }
 
+    public void reverse() {
+        int left = 0;
+        int right = path.size() - 1;
+
+        // Swap elements from both ends of the path
+        while (left < right) {
+            Vertex temp = path.get(left);
+            path.set(left, path.get(right));
+            path.set(right, temp);
+            left++;
+            right--;
+        }
+    }
+
     public void displayPath(Vertex[][] fileArray) {
         Character[][] pathArr = new Character[fileArray.length][fileArray[0].length];
 
