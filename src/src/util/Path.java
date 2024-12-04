@@ -17,16 +17,6 @@ public class Path {
         path = new ArrayList<>(other.path);
     }
 
-    public Path(int weight) {
-        this.weight = weight;
-        this.path = new ArrayList<>();
-    }
-
-    public Path(int weight, ArrayList<Vertex> path) {
-        this.weight = weight;
-        this.path = new ArrayList<>(path);
-    }
-
     public int getWeight() {
         return weight;
     }
@@ -78,7 +68,10 @@ public class Path {
             }
         }
 
+        int distance = 0;
+
         for (int i = 0; i < path.size() - 1; i++) {
+            distance--;
             Vertex start = path.get(i);
             Vertex end = path.get(i + 1);
 
@@ -88,10 +81,12 @@ public class Path {
                 if (start.x < end.x) {
                     for (int j = start.x; j <= end.x; j++) {
                         pathArr[start.y][j] = 'x';
+                        distance++;
                     }
                 } else {
                     for (int j = start.x; j >= end.x; j--) {
                         pathArr[start.y][j] = 'x';
+                        distance++;
                     }
                 }
             }
@@ -101,16 +96,18 @@ public class Path {
                 if (start.y < end.y) {
                     for (int j = start.y; j <= end.y; j++) {
                         pathArr[j][start.x] = 'x';
+                        distance++;
                     }
                 } else {
                     for (int j = start.y; j >= end.y; j--) {
                         pathArr[j][start.x] = 'x';
+                        distance++;
                     }
                 }
             }
         }
 
-        System.out.println("Path distance: " + weight + " vertices");
+        System.out.println("Path distance: " + distance);
 
         for (Character[] characters : pathArr) {
             for (int j = 0; j < pathArr[0].length; j++) {

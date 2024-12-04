@@ -170,26 +170,7 @@ public class AStar implements Algorithm {
             }
         }
 
-        combined.setWeight(calculatePathDistance(combined));
-
         return combined;
-    }
-
-    private int calculatePathDistance(Path path) {
-        int distance = 0;
-
-        List<WeightedEdge<Vertex, Vertex>> edges = Main.weightedGraph.getEdges();
-
-        for (int i = 0; i < path.getPath().size() - 1; i++) {
-            for (WeightedEdge<Vertex, Vertex> edge : edges) {
-                if (edge.getFst().equals(path.getPath().get(i)) && edge.getSnd().equals(path.getPath().get(i+1))) {
-                    distance += edge.getWeight();
-                    break;
-                }
-            }
-        }
-
-        return distance;
     }
 
     @Override

@@ -72,6 +72,7 @@ public class List<T> implements Iterable<T> {
 
     public boolean contains(T object) {
         for (T item : this) {
+            if (item == null) continue;
             if (item.equals(object)) {
                 return true;
             }

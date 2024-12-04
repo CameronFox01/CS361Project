@@ -96,6 +96,8 @@
 package Algorithms;
 
 import DataStructures.ArrayList;
+import DataStructures.Map;
+import DataStructures.Queue;
 import DataStructures.Set;
 import EntryPoints.Main;
 import util.*;
@@ -108,25 +110,31 @@ public class BFS implements Algorithm {
         ArrayList<Pair<Pair<Vertex, Vertex>, Integer>> orderedTargets = orderTargetsByDistance(startVertex, targets);
         ArrayList<Path> uncombinedPaths = new ArrayList<>();
 
-        for (Vertex target : targets) {
+        for (Pair<Pair<Vertex, Vertex>, Integer> targetPair : orderedTargets) {
+            Vertex currStartVertex = targetPair.getFst().getFst();
+            Vertex target = targetPair.getFst().getSnd();
+
+            // Initialize data structures
             Set<Vertex> visited = new Set<>();
-            ArrayList<Vertex> queue = new ArrayList<>();
-            ArrayList<Vertex> parentMap = new ArrayList<>();
+            Queue<Pair<Vertex, Vertex>> queue = new Queue<>(); // Pair<vertex, parent>
+            Map<Vertex, Vertex> parentMap = new Map<>();
 
             // Initialize the BFS
-            queue.add(startVertex);
-            visited.add(startVertex);
-            parentMap.add(null); // Start vertex has no parent
+            queue.offer(new Pair<>(currStartVertex, currStartVertex));
+            visited.add(currStartVertex);
 
             // Start BFS loop
             while (!queue.isEmpty()) {
-                Vertex current = queue.remove(0); // Dequeue the front of the queue
                 verticesVisited++;
+
+                Pair<Vertex, Vertex> currentPair = queue.poll(); // Dequeue the front of the queue
+                Vertex current = currentPair.getFst();
+                Vertex parent = currentPair.getSnd();
 
                 if (current == target) {
                     // Reconstruct path to the target
-                    parentMap.add(target);
-                    uncombinedPaths.add(reconstructPath(parentMap, current, startVertex));
+                    parentMap.put(current, parent);
+                    uncombinedPaths.add(reconstructPath(parentMap, current, currStartVertex));
                     break;
                 }
 
@@ -136,8 +144,8 @@ public class BFS implements Algorithm {
 
                     if (!visited.contains(neighbor)) {
                         visited.add(neighbor);
-                        queue.add(neighbor); // Enqueue the neighbor
-                        parentMap.add(current); // Track the parent
+                        queue.offer(new Pair<>(neighbor, current)); // Enqueue the neighbor (Pair<>(neighbor, parent)
+                        parentMap.put(neighbor, current); // Track the parent
                     }
                 }
             }
@@ -154,6 +162,7 @@ public class BFS implements Algorithm {
 
         return new AlgorithmResults(verticesVisited, combinedPath);
     }
+
     private ArrayList<Pair<Pair<Vertex, Vertex>, Integer>> orderTargetsByDistance(Vertex startVertex, ArrayList<Vertex> targets) {
         //Create a copy of the targets to avoid modifying the original list
         ArrayList<Vertex> targetsCopy = new ArrayList<>(targets);
@@ -202,37 +211,50 @@ public class BFS implements Algorithm {
         return (Math.abs((target.x - currentVertex.x)) + Math.abs((target.y - currentVertex.y)));
     }
 
-    private Path reconstructPath(ArrayList<Vertex> parentMap, Vertex current, Vertex startVertex) {
+    private Path reconstructPath(Map<Vertex, Vertex> cameFrom, Vertex current, Vertex startVertex) {
         Path path = new Path();
         path.add(current);
 
-        // Backtrack from the target to the start using parentMap
-        while (current != startVertex) {
-            int parentIndex = parentMap.indexOf(current) - 1;
-            if (parentIndex == -1) break; // Safety check, although it shouldn't happen in BFS
-           // System.out.println("Parent: "+parentMap.get(parentIndex) + " Index:  " + parentIndex + " Current: " + current);
-            current = parentMap.get(parentIndex);
-            path.getPath().add(current, 0); // Add to the front of the path (reverse order)
+        while (mapContains(cameFrom, current)) {
+            Vertex otherVertex = getOtherVertexInMap(cameFrom, current);
+            path.getPath().add(otherVertex, 0);
+            current = otherVertex;
+
+            if (current == startVertex) break;
         }
 
-        path.reverse(); // Reverse to get the correct order from start to target
         return path;
+    }
+
+    private boolean mapContains(Map<Vertex, Vertex> map, Vertex vertex) {
+        return map.keys().contains(vertex) || map.values().contains(vertex);
+    }
+
+    private Vertex getOtherVertexInMap(Map<Vertex, Vertex> map, Vertex vertex) {
+        for (Pair<Vertex, Vertex> pair : map.entrySet()) {
+            if (pair.getSnd().equals(vertex)) {
+                map.remove(pair.getFst());
+                return pair.getFst();
+            } else if (pair.getFst().equals(vertex)) {
+                map.remove(pair.getFst());
+                return pair.getSnd();
+            }
+        }
+
+        return null;
     }
 
     private Path combinePaths(ArrayList<Path> paths) {
         Path combined = new Path();
-        int combinedWeight = 0;
-        combined.add(paths.get(0).getPath().get(0)); // Add the first vertex of the first path
+        combined.add(paths.getFirst().getPath().getFirst()); // Add the first vertex of the first path
 
         for (Path path : paths) {
-           path.getPath().remove(0); // Remove the first vertex (already added)
+            path.getPath().removeFirst(); // Remove the first vertex (already added)
 
             while (!path.getPath().isEmpty()) {
-                combined.add(path.getPath().remove(0)); // Add the rest of the vertices
+                combined.add(path.getPath().removeFirst()); // Add the rest of the vertices
             }
         }
-
-        combined.setWeight(combinedWeight);
         return combined;
     }
 

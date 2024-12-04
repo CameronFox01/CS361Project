@@ -53,6 +53,7 @@ public class Map<K, V> {
     public V put(K key, V value) {
         if (containsKey(key)) {
             for (Pair<K, V> entry : map) {
+                if (entry.getFst() == null) continue;
                 if (entry.getFst().equals(key)) {
                     entry.setSnd(value);
                     break;
