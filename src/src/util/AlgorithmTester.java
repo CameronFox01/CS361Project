@@ -14,7 +14,7 @@ public class AlgorithmTester {
     }
 
     public void testFunction(int numTrials, int numSamples, Vertex startVertex, boolean displayPath) {
-        System.out.println("Starting test for " + algorithm.getName() + " with " + numTrials + " num trials, and " + numSamples + " num samples.");
+        System.out.println("Starting test for " + algorithm.getName() + " with " + numTrials + " trials, and " + numSamples + " samples.");
 
         //Initial run
         AlgorithmResults results = algorithm.runAlgorithm(startVertex, targets);
