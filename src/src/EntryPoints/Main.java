@@ -19,8 +19,8 @@ public class Main {
     public static void main(String[] args) {
         List<String> fileString = new ArrayList<>();
         try {
-            //File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
-            File file = new File(args[0]);
+            File file = new File(System.getProperty("user.dir") + "/TestCases/" + args[0]);
+            //File file = new File(args[0]);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()){
                 fileString.add(sc.nextLine());
@@ -66,10 +66,10 @@ public class Main {
         AlgorithmTester bellmanFordTester = new AlgorithmTester(new BellmanFord(), targets);
 
         bellmanFordTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
-        //dijkstraTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
-        //aStarTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
-//        dfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
-//        bfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
+        dijkstraTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
+        aStarTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
+        dfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
+        bfsTester.testFunction(numTrials, numSamples, fileArray[0][0], true);
     }
 
     private static WeightedGraph<Vertex> arrayToWeightedGraph(Vertex[][] arr) {

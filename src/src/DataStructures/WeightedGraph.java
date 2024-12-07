@@ -19,8 +19,13 @@ public class WeightedGraph<T> {
         addVertex(edge.getFst());
         addVertex(edge.getSnd());
 
+        // Add first
         adjancecyMap.get(edge.getFst()).add(edge);
-        adjancecyMap.get(edge.getSnd()).add(edge);
+
+        // Flip edge
+        WeightedEdge<T, T> flipped = new WeightedEdge<>(edge.getSnd(), edge.getFst(), edge.getWeight());
+
+        adjancecyMap.get(edge.getSnd()).add(flipped);
 
         edges.add(edge);
     }

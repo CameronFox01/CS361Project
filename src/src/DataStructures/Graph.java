@@ -19,8 +19,13 @@ public class Graph<T> {
         addVertex(edge.getFst());
         addVertex(edge.getSnd());
 
+        // Add first edge
         adjancecyMap.get(edge.getFst()).add(edge);
-        adjancecyMap.get(edge.getSnd()).add(edge);
+
+        // Flip edge
+        Edge<T, T> flipped = new Edge<>(edge.getSnd(), edge.getFst());
+
+        adjancecyMap.get(edge.getSnd()).add(flipped);
 
         edges.add(edge);
     }
